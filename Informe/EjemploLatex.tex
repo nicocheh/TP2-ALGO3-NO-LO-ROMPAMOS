@@ -1,0 +1,516 @@
+\documentclass[A4paper,oneside,fleqn,10pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+%Cambiamos un poquito los márgenes%
+\addtolength{\oddsidemargin}{-1in}
+\addtolength{\evensidemargin}{-1in}
+\addtolength{\textwidth}{2in}
+\addtolength{\topmargin}{-1in}
+\addtolength{\textheight}{2in}
+
+
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsmath,scalerel}
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{algpseudocode}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usepackage{graphicx,wrapfig,lipsum}
+
+\graphicspath{ {Grphs/} }
+
+
+\setcounter{tocdepth}{3}% to get subsubsections in toc
+
+\let\oldtocsection=\tocsection
+
+\let\oldtocsubsection=\tocsubsection
+
+\let\oldtocsubsubsection=\tocsubsubsection
+
+% various theorems, numbered by section
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}[teo]{Proposición}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{crit}[teo]{Criterio}
+\newtheorem{propi}[teo]{Propiedad}
+
+\theoremstyle{definition}
+\newtheorem{ejcio}[teo]{Ejercicio}
+\newtheorem{conj}[teo]{Conjetura}
+\newtheorem{obs}[teo]{Observación}
+\newtheorem{defn}[teo]{Definición}
+\newtheorem{ax}[teo]{Axioma}
+\newtheorem{ex}[teo]{Ejemplo}
+
+\newcommand{\bd}[1]{\mathbf{#1}}  % for bolding symbols
+\newcommand{\cl}[1]{\overline{#1}} 
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}      % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}}      % for Integers
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\col}[1]{\left[\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\hom}{\mathrm{Hom}}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\mcm}{mcm}
+\DeclareMathOperator{\mcd}{mcd}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\sg}{sg}
+\DeclareMathOperator{\cok}{cok}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\rank}{rk}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\car}{char}
+\DeclareMathOperator{\Nil}{Nil}
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\ann}{Ann}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator*{\bigcdot}{\scalerel*{\cdot}{\bigodot}}
+\def\acts{\curvearrowright}
+\def\stca{\curvearrowleft}
+
+\setcounter{tocdepth}{10}
+\setcounter{secnumdepth}{10}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+
+ \chead{Algo III, TP1, Nicolás Chehebar}
+ 
+\title{Algoritmos y Estructuras de Datos III, TP1}
+\author{Nicolás Chehebar}
+\date{}
+
+
+\begin{document}
+
+\pagenumbering{roman}
+\pagenumbering{arabic}
+\maketitle
+\tableofcontents
+\clearpage
+
+\section{El Problema}
+
+\subsection{Descripcion}
+
+El problema a resolver consiste en una situación en la cual tenemos  $i\in \NN$ personas numeradas $1,2,...,i$ y $a\in \NN_{0}$ pares $(j,k)$ con $j,k \in \ZZ - \{ 0 \}$ tales que $1\leq j\leq i \land -i \leq k \leq i$. Cada par nos expresa que el individuo $j$ dice que el individuo numerado $|k|$ es confiable (si $k>0$) o dice que no es confiable (sino, i.e $k<0$). Queremos encontrar $\#A$ donde $A \subseteq \{1,2,...,i \}$ confiable tal que $ \forall B \subseteq \{1,2,...,i\}$ confiable, $\#A \geq \#B$. 
+Donde que un conjunto $C$ sea confiable es que: 
+\begin{itemize}
+
+\item Ningún individuo en el conjunto diga que es confiable un individiuo que no está en el conjunto.
+
+\item Ningún individuo en el conjunto diga que no es confiable un individuo en el conjunto.
+
+\end{itemize}
+
+
+\subsection{Ejemplos}
+
+\begin{itemize}
+
+\item $i=1, a=2$ y los pares son $(1,-1);(1,1)$. 
+En este ejemplo, el individuo $1$ dice que no es confiable, por ende no puede estar en el conjunto máximo buscado. Luego el conjunto máximo buscado es $\emptyset$ y por ende la respuesta es $0$.
+
+\item $i=3, a=2$ y los pares son $(1,3);(2,-3); (3; -3)$. 
+En este ejemplo, el individuo $3$ dice que el mismo no es confiable, por ende jamás puede ser incluido en un conjunto confiable, lo que nos dice que el $1$ tampoco puede serlo ya que conllevaría la inclusión de $3$ que genera la inconsistencia. Luego, ni $1$ ni $3$ pertenecen al conjunto máximo buscado. Por ende, el mayor subconjunto posible es el $\{2\}$, que es efectivamente confiable ya que lo único que dice $2$ es que $3$ no es confiable, y como $3$ no esta en el subconjunto, no genera inconsistencias, luego es confiable y es el máximo. Por ende la respuesta es $1$.
+
+\item $i, a$ donde todos los pares son de la forma $(j,k), k>0$.
+En este caso generico de ejemplos, el conjunto $\{1,2,...,i\}$ cumple ser confiable ya que no hay ningún individuo que haya dicho que otro es no confiable, y no hay individuos fuera del conjunto, por lo que se cumplen ambas condiciones. Y como es el máximo de todos los subconjuntos, es el subconjunto buscado y por ende la respuesta es $i$.
+
+\end{itemize}
+
+\section{El Algoritmo sin podas}
+
+\subsection{Resumen}La idea para la resolución del problema consiste en realizar backtracking. En el árbol del backtracking el nodo inicial sera el conjunto vacio y en el nivel $i$-ésimo decidiremos si el individuo numerado $i$ pertenece o no al conjunto. Tomaremos una de las ramas, siempre y cuando hasta ese momento no cree una inconsistencia la inclusión (o no) del individuo $i$. Así iremos obteniendo en las hojas conjuntos de individuos que serán los posibles confiables. Iremos guardando en un contador el máximo actual de los cardinales de los conjuntos confiables ya obtenidos, y cuando alguna hoja supere el contador, lo actualizamos- Así, al final del backtracking quedará guardado en el contador el resultado buscado. Nuestro espacio de búsqueda incial será $\mathcal{P} \{1,2,...,i\} $. La función de backtracking siempre tendrá como entrada además del máximo, el vector de los hasta ahora confiables, un entero que indica el individuo actual (al que vamos a decidir si pertenece o no al conjunto) y una matriz $M$ de $i*i$ que tendrá la información de los votos, donde $M(i,j)=1$ si $i$ dijo que $j$ era confiable, $M(i,j)=-1$ si dijo que no era confiable, $M(i,j)=0$ si no dijo nada, $M(i,j)=8$ si voto más de una vez y con contradicción el $i$ al $j$ (con contradicción quiere decir que al menos una vez dijo que era confiable y al menos una que no lo era). Al recibir la entrada, iremos grabando la información recibida en $M$ y luego al final devolveremos por la salida el máximo. Veamos con  más detalle la función de backtracking con ayuda del pseudocodigo:
+\subsection{El Backtracking}
+
+\begin{algorithm}
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \underline{Backtracking} $(confiables,actual,matriz, maximo)$\;
+    \Input{$maximo,actual \in \ZZ_{\geq 0}$; $matriz \in \{0,1,-1,8\}^{i \times i}$; $confiables$ vector de enteros}
+    \Output{void}
+    \eIf{Ya evalue todos los individuos}
+      {
+        Actualizo $maximo$ si $confiables.size()$ supera a $maximo$ 
+        
+        return;
+      }
+      {
+      	\If{No genera inconsistencia que $actual$ sea confiable}
+        	{
+        	Agrego $actual$ al vector $confiables$;
+        	
+        	$Backtracking (confiables, actual+1, matriz, maximo)$; 
+        	}
+        \If{No genera inconsistencia que $actual$ no sea confiable}
+        	{
+        	$Backtracking (confiables, actual+1, matriz, maximo)$; 
+        	}
+		      
+      }      
+      \caption{Devuelve el máximo cardinal de los conjuntos confiables de agentes}   
+\end{algorithm}
+
+ Cabe aclarar que $actual$ representa al individuo numerado $actual+1$ ya que en el código contamos desde $0$ y en la formulación incial del problema, desde $1$. De aquí en adelante contaremos desde $0$, donde los individuos serán numerados $0, 1, 2,..., i-1$.
+ 
+En el pseudocodigo tenemos la estructura general del backtracking, el primer if chequea si es una hoja, o sea si ya se decidió la inclusión (puede ser por la positiva o negativa) de todos los individuos, en ese caso tenemos una hoja y si supera al máximo, lo pisamos. La forma en la que observamos que ya se decidió la inclusión de todos es que $actual=matriz.size()$ ya que actual ya pasó por todos los individuos. Como cada vez que incluimos (o no) a alguien chequeamos que se mantenga la confiabilidad, el conjunto es confiable y por ende actualizamos máximo si es que $confiables.size()>maximo$.
+
+En caso de no ser una hoja, en este nodo debemos decidir la inclusión o no del individuo $actual$. Por esto hay dos ifs, cada uno chequea que no haya una inconsistencia al incluirlo (o no) y si no se genera una inconsistencia se lo incluye (caso en el que se lo agrega al vector  $confiables$) o no y se llama nuevamente al backtracking con el mismo vector de confiables (si no se incluyó a actual, si se lo incluyó con actual agregado), el mismo máximo, la misma matriz, pero con $actual+1$ ya que el próximo paso a decidir será la inclusión o no de $actual+1$ (si es que no se trata ya de una hoja).
+
+Es importante observar que no es exclusiva la inclusión de la exclusión de $actual$ en el conjunto, son dos ifs, no es un if then else ya que tanto la inclusión como la exclusión de actual son dos posibilidades, y queremos explorar ambas ramas del backtracking si son válidas (es decir, si los ifs dan true).
+
+Cabe también destacar el último if, en caso de que incluir a $actual$ genere una inconsistencia y no incluirlo también el conjunto ya no podrá ser confiable, por ende se abandona la rama y se termina el backtracking.
+
+Cabe aclarar también que en ambos chequeos de inconsistencia asumimos que los que estan en confiables ya lo son y evaluamos como influiría en eso la decisión que tomemos sobre la confiabilidad de $actual$. Al generarse un absurdo, nos indica que hay inconsistencia:
+
+\begin{itemize}
+\item \underline{\textbf{Inconsistencia por la no inclusión de actual}:} lo que hace el algoritmo es recorrer linealmente el vector $confiables$ y chequea que ninguno haya dicho que $actual$ es confiable (ver si $ \exists j \in confiables / matriz[j][actual]>0$) (ya que en ese caso $actual$ debería ser confiable, inconsistente)
+\item  \underline{\textbf{Inconsistencia por la inclusión de actual}:} lo que hace el algoritmo es recorrer linealmente el vector $confiables$ y chequear que $actual$ no haya dicho que alguno no es confiable (ya que como $actual$ es confiable, el otro no debería serlo, inconsistente) y viceversa (i.e, que nignuno de los de $confiables$ haya dicho que $actual$ no lo es ya que  $actual$ no debería serlo y estamos en el caso en que sí, absurdo) (ver si $ \exists j \in confiables / matriz[actual][j]<0$ y viceversa: $matriz[j][actual]<0 $). 
+
+Además recorre linealmente los elementos en $\{0,1,...,actual-1\}$ y dentro de los que $\notin confiables$ (para chequear esto se realiza una búsqueda binaria ya que $confiables$ esta ordenado), se fija que $actual$ no haya dicho que eran confiables (los $j<actual / j \notin confiables$) (ya que como actual es confiable, el otro debería serlo, inconsistente).
+ 
+Además se fija lo que sucedió en casos peculiares en la votación, se encarga de chequear que $actual$ no haya dicho que él mismo no es confiable (ver si $matriz[actual][actual]<0$), y además se encarga de chequear que no haya votado patologicamente, o sea que no haya votado dos veces a algun individuo diciendo cosas distintas, recorriendo linealmente $matriz$ en la fila de $actual$ (ver si $ \exists j \in \{0,1,..,matriz.size()-1\} / matriz[actual][j]==8$). 
+\end{itemize}
+
+De esta forma chequeamos a cada paso, al decidir si agregar o no un individuo a $confiables$, las condiciones para que el conjunto que vamos formando sea confiable, esto nos asegura que cuando llegamos a una hoja, el conjunto que esta representa es confiable. Por ende basta simplemente ver en la hoja $confiables.size()$ y si supera o no a $maximo$ y en caso que sí actualizar $maximo$.
+
+Para la resolución del problema, una vez que ya volcamos la información recibida por los votos en $matriz$ (cuyo tamaño también es parte de la información recibida), ejecutamos $Backtracking(confiables, actual, matriz, maximo)$ donde inicialmente $actual=maximo=0$ (comenzaremos analizando al primer individuo y en principio hasta ahora $0$ es el mayor cardinal -notar que vacío siempre es confiable-) y $confiables$ es un vector vacío (es la raiz del árbol de backtracking). Una vez que se haya ejecutado $Backtracking$ la función dejará en máximo el valor buscado, que devolveremos por la salida estándar.
+
+\section{Las Podas}
+\subsection{La Poda de Máximo}
+Esta poda es muy simple y se realiza al principio de la función $Backtracking$, consiste simplemente en fijarse si el mayor cardinal posible que puede dar el conjunto de confiables (considerando que hasta $actual$ los confiables son los del vector $confiables$) es menor o igual que $maximo$ (ver si $matriz.size()-actual+confiables.size()<=maximo$). En este caso ya no tiene sentido seguir explorando en ninguna de las dos ramas que se desprenden del nodo ya que por mas que se llegue a varios conjuntos confiables, ninguno tendrá cardinal mayor que $maximo$ y por ende la respuesta seguirá siendo la que tenemos almacenada hasta ahora en la variable $maximo$.
+\subsection{La Poda de Próximos}
+Esta poda es un poco más compleja que la anterior e implica algunos cambios de forma en la función que aclararemos antes de proceder a explicar la poda en sí.
+
+ Primero que nada, la funcion Backtracking tendrá tres nuevos parámetros que serán $proximos$, $proximos2$ que son vectores de elementos de $\{1,...,i-1\}$ y un booleano $consistente$. Inicialmente, $proximos$ y $proximos2$ seran todos los individuos mayores a $0$ que no han votado patologicamente (a los que antes les ponía un $8$ en la matriz, cosa que ya no sucederá mas por no ser necesario, si alguien vota distinto, dejo indistintamente cualquier voto guardado y pongo al individuo como patologico y por ende no lo pongo en proximos). La diferencia será que $proximos$ y $proximos2$ son dos vectores con la lista de los proximos individuos a ver si pertenecen o no al conjunto y $actual$ al actualizarse va a pasar a ser el primer elemento de $proximos$ en vez de $actual+1$, obviamente $proximos$ también se va a actualizar y se le va a borrar el primer elemento. En caso de generarse en algún momento una inconsistencia, el booleano $consistente$ tomara el valor falso y se cortarán las ramas al llamarse nuevamente el backtracking, sin ejecutarse nada. Por esto habrá un if al princpio de Backtracking que en caso de ser consistente falso, se termina ahí la ejecución, porque no tiene sentido seguir explorando porque ya hay una inconsistencia. 
+ 
+La gran diferencia y de donde surge la poda es que apenas ingresamos por la rama en la que incluimos a $actual$ o por la que no lo incluimos, el vector de proximos se actualizará. Mantenemos dos vectores $proximos$ y $proximos2$ ya que uno se actualizará en la rama en que incluimos a $actual$ en $confiables$ y el otro en la rama en la que no lo incluimos. Siempre al principio de la ejecución de Backtracking, $proximos==proximos2$ (es claro que podríamos también pasar una sola copia y copiarlo dentro de la función, es indistinto). Al actualizar próximos, sacaremos a los que sabemos no pueden ser confiables, pero eso no nos asegura que sean efectivamente no confiables, podrían no poder ser ninguna de ambas y crear una inconsistencia por lo que debería terminar la ejecución. Veamos como es la actualización de próximos en ambos casos: 
+
+\begin{itemize}
+
+ 
+\item  \underline{\textbf{Actualizacioó de próximos por la inclusión de actual}:} si $actual$ (que entro como confiable) dijo que alguno de $proximos$ no era confiable, ese otro jamas puede ser confiable ya que $actual $ lo es, por ende lo saco de los candidatos, o sea de $proximos$. Recorro linealmente $proximos$ y dentro de los que $actual$ dijo que no eran confiables, chequeo inconsistencia y los borro de $proximos$. Si alguno de los borrados generaba inconsistencia, el booleano $consistente$ pasa a ser falso y en la próxima ejecución de Backtracking pasaremos ese boleano por lo que no se seguirá ninguna rama que es lo que buscamos por ser una inconsistencia.
+
+\item \underline{\textbf{Actualización de próximos por la no inclusión de actual}:} si alguno de  $proximos2$ dijo que era confiable $actual$ (que entró como no confiable), no puede ser confiable ya que $actual$ no lo es, por ende lo saco de los candidatos, o sea de $proximos2$. Recorro linealmente $proximos2$ y dentro de los que dijeron que $actual$ era confiable, chequeo inconsistencia y los borro de $proximos2$. Si alguno de los borrados generaba inconsistencia, el booleano $consistente$ pasa a ser falso y en la próxima ejecución de Backtracking pasaremos ese boleano por lo que no se seguirá ninguna rama que es lo que buscamos por ser una inconsistencia.
+
+\end{itemize}
+
+Por último se agrega el chequeo de la inconsistencia por la exclusión de algún individuo (el que borramos de $proximos$), que es simplemente recorrer linealmente el vector $confiables$ y ver si alguno de ellos dijo que el excluido era confiable, en ese caso el excluido debería ser un elemento de $confiables$ lo que genera una inconsistencia. Si con ninguno de los elementos sucede eso, no hay inconsistencia.
+
+Hay otro pequeño cambio que creo vale destacar para comprender que parte de lo que estamos haciendo es simplemente procesar cosas en otro orden. Dicho cambio también realizable es a la hora de chequear consistencia por la inclusion de actual, la condición de viceversa (que ninguno de los de $confiables$ haya dicho que $actual$ no lo es) ya no es necesaria de chequear ya que supongamos que $x \in confiables$ dice que $actual$ no es confiable, luego en el momento en que decidimos que $x$ pertencía a confiables, actualizamos $proximos$ y sacamos a $actual$ y por ende jamás deberíamos estar procesando a $actual$, absurdo. 
+
+En cuanto a la poda, lo que estamos haciendo es algo así como "juntar varios nodos", o sea si al actualizar $proximos$ saco al individuo $k$ me aseguro (con el costo de chequear que se mantenga la cosistencia) que la única solución posible (si es que no genero inconsistencia) es no incluir a $k$ en confiables, por ende la ramificación que se debería dar a la hora de decidir si incluir o no a $k$ ya no se da, por lo que estamos reduciendo en gran número la cantidad de ramas. 
+En el arbol del backtracking sin podas, todos los nodos que eran hijos del nodo actual y estaban en el nivel $k$-ésimo dejan de existir (o se juntan con el nodo actual) ya que ya decidimos sobre la inclusión del individuo $k$. Otra parte de la poda es que en caso de que un individuo $k$ produzca una inconsistencia, en el algoritmo sin poda lo notamos a la hora de decidir sobre el; sin embargo con esta poda lo podemos notar mucho antes poesto que si un individuo $h<k$ que decidimos sea confiable dijo que $k$ no era confiable, ahi chequeamos inconsistencia de decidir que $k$ no sea confiable, pues actualizarproximos lo hace y en caso de haber inconsistencia, podamos la rama en el nivel $h$ en vez de en el nivel $k$ ahorrandonos todas las ramificaciones entre los niveles $h$ y $k$.
+
+\subsection{Ambas podas}
+Al unir ambas podas, la situación del algoritmo es la misma que la de en la poda de próximos aunque con un if más, el que chequea la condición de máximo. Pero ahora el máximo cardinal alcanzable por el conjunto que tenemos hasta ahora tiene una cota mucho más ajustada, porque no sumamos a $confiables.size()$ todos los que quedan por analizar (como lo hacíamos cuando solo teníamos la poda de máximo) sino todos los que estan en $proximos$, que pueden ser menos si es que los que están en confiables dijeron que alguno de los que son mayores a $actual$ no es confiable. Es interesante notar que al combinar ambas podas, tenemos un refinamiento de la primera.
+
+\section{Complejidad}
+Para el análisis de la complejidad tomaremos el algoritmo con ambas podas, como el análisis que haremos es de peor caso y para mostrar una complejidad menor a $\mathcal{O} (2^i i^3 a^3)$ consideraremos que las podas nunca se ejecutan, por lo que es claro que el algoritmo sin podas tendrá menor complejidad aún, puesto que tiene menos operaciones a ejecutar (suponiendo que el algoritmo con poda no poda nada, pero si ejecuta los análisis que hace para podar).
+
+Es claro que la lectura de las encuestas y volcar esa informacion en $matriz$ es $\mathcal{O} (a)$ (suponiendo $\mathcal{O} (1)$ leer un entero por entrada estándar e imprimirlo por salida estándar). La creación de la matriz es $\mathcal{O} (i^2)$, crear el vector de $proximos$, $patologicos$, $proximos2$ es $\mathcal{O} (i)$. Después se crean otras variables como máximo, consistente y se realizan otras operaciones de comparación que son todas $\mathcal{O} (1)$. Todos estos tiempos son ajenos al proceso de la función en sí, pero no está de más considerarlos, en total su suma da $\mathcal{O} (a+i^2)$.
+
+En cuanto al tiempo que toma el algoritmo en sí, la poda de máximo es un simple if con una comparación, por lo que es $\mathcal{O} (1)$. Chequear si un nodo del árbol de Backtracking es hoja (linea 2 del pseudocodigo) es también $\mathcal{O} (1)$ pues es solo ver si $actual==matriz.size()$ y a lo sumo actualizar $maximo$. Luego, para ver si genera inconsistenca la inclusión o no de $actual$ a $confiables$ (lineas 6 y 9 del pseudocodigo) en ambos casos recorremos linealmente los vectores $confiables$, o los elementos de $\{0,1,...,i-1\}$ (lo importante es que todos tienen tamaño menor a $i$) y cada vez que las recorremos hacemos a lo sumo dos busquedas binarias por cada elemento, una en $confiables$ y otra en $proximos$ (aprovechando que estan ordenados) y como ambos son vectores de tamaño menor a $i$, la busqueda es $\mathcal{O} (log(i))$. Por ende ver si genera inconsistenca la inclusión o no de $actual$ a $confiables$  es en ambos casos $\mathcal{O} (i*log(i))$.
+
+Tanto en si $actual$ es posible confiable, como si es posible no confiable, actualizamos $proximos$ que consiste en recorrer linealmente $proximos$ y para cada elemento realizar comparaciones, borramos un elemento de un vector, aumentamos una variable, todas operaciones que son $\mathcal{O} (1)$ a excepcion de chequear si hay inconsistencia, lo que  es recorrer linealmente los $confiables$ y hacer operaciones $\mathcal{O} (1)$. Como ambos vectores ($proximos$ y $confiables$) tienen tamaño menor a $i$, en el peor de los casos recorremos todo $confiables$ y hacemos operaciones $\mathcal{O} (1)$  por cada elemento de $proximos$, por ende es $\mathcal{O} (i^2)$.
+
+
+Dentro de cada rama (suponiendo que se ejecutan ambas) lo que queda por analizar es actualizar $actual$ y borrar el primer elemento de $proximos$ es $\mathcal{O} (1)$ y nuevamente volvemos a llamar a Backtracking. Por ende, sumando las complejidades en cada rama tenemos una complejidad total $2*\mathcal{O} (i^2)+ 2* \mathcal{O} (i*log(i)) = \mathcal{O} (i^2)$ por la ejecución de cada función sin considerar lo que aporta a la complejidad llamar nuevamente a Backtracking. Pero llamar a Backtracking repite nuevamente la misma complejidad en cualquier llamado ya que el análisis que hicimos es independiente al nodo en el que nos encontremos del arbol de Backtracking. A lo sumo hay $2^i = \# \mathcal{P} \{1,2,...,i\} $ (que es el cardinal de nuestro espacio de busqueda) nodos y por cada uno se ejecuta algo que es $\mathcal{O} (i^2)$, por ende la complejidad total de la ejecución es $2^i * \mathcal{O} (i^2) = \mathcal{O} (2^i i^2)$.
+
+Finalmente, si queremos considerar también la lectura de las encuestas y lo analizado al principio que excede al algoritmo en sí, es cuestión de sumar $\mathcal{O} (a+i^2)+\mathcal{O} (2^i i^2) = \mathcal{O} (2^i i^2+a)$  y como $i \geq 1$ implica $a \leq a 2^i i^2$ y por ende $ \mathcal{O} (2^i i^2+a) \leq \mathcal{O} (2^i i^2+a 2^i i^2 ) \leq \mathcal{O}(2^i i^2 (a+1)) = \mathcal{O} (2^i i^2 a) \leq \mathcal{O} (2^i i^3 a^3)$ por ser $i \geq 1$ y $a \geq 0$. Así, el algoritmo tiene una complejidad menor a la pedida.
+
+\section{Experimentación}
+\subsection{Contexto}
+
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividìa el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+ 
+\subsection{Sin poda}
+Para el algoritmo sin poda se tomó una serie de $200$ casos generados aleatoriamente de la siguiente forma: se eligió una cantidad de individuos entre $1$ y $26$ y una cantidad de encuestas aleatoria entre $1$ y $26$, para cada una de esas encuestas se eligió un par de individuos donde el primero decía sobre el segundo que era confiable o no (según otra elección sea 0 o 1), donde cada una de estas elecciones se realizó de forma aleatoria con una distribución uniforme (en todos los casos se utilizó la función rand()  de librerías de C++ en el rango correspondiente - http://www.cplusplus.com/reference/cstdlib/rand/ -). Se espera un crecimiento exponencial del tiempo que tarda en ejecutarse el algoritmo según crece la cantidad de individuos, debido al análisis de complejidad realizado (el tiempo, por como se mide, es un buen reflejo de la cantidad de operaciones realizadas). Por una cuestión de tiempo (el crecimiento exponencial es muy grande y tardaría demasiado testear) se acoto a i en ese rango, y la cantidad de encuestas también para dejar luego a análisis que sucede cuando el numero es muy elevado y hay votos patologicos e inconsistencias que determinan antes de llegar a una hoja que un conjunto no es confibale. A continuación un gráfico que representa el tiempo en segundos en función de la cantidad de individuos:
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.5]{SinPoda.png}
+  \label{fig:boat1}
+\end{figure}
+
+\scriptsize
+     Figura 1: Gráfico de segundos de ejecución en función de integrantes para las instancias con a=8
+
+\normalsize
+Efectivamente podemos ver en el gráfico (Figura 1), que fue hecho con una escala logaritmica en el eje y, que la distribución pareciera indicar un gráfico lineal, lo que al ser la escala logarítmica en el eje y, refuerza nuestra hipótesis de que la relación entre el tiempo y la cantidad de individuos es exponencial en la cantidad de individuos.  Más aún, la pendiente es menor a $1$, lo que tiene sentido ya que la diferencia con la relación exponencial propuesta (con base $2$) es en el cociente entre las constantes $ln(2)$ y $ln(10)$
+
+Más aún para corroborar que no hay influencia de la variable a (cantidad de encuestas) en la relación y que la dependencia que dijimos se da debido a que se incrementa la variable i, se realizaron los graficos fijando la variable a (la cantidad de encuestas) entre los valores que tomó y en todos los casos se obtuvo una grafico lineal (con la escala logaritmica), lo que refuerza la hipótesis de que la dependencia respecto de i es exponencial. A continuación (por una cuestión de espacio en el informe) mostramos los gráficos con a = 8,14,20,23 (Figuras 2,3,4 y 5 respectivamente):
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.25]{SinPodaa=8.png}
+  \label{fig:boat2}
+  \includegraphics[scale=0.25]{SinPodaa=14.png}
+  \label{fig:boat3}
+  \includegraphics[scale=0.25]{SinPodaa=20.png}
+  \label{fig:boat4}
+  \includegraphics[scale=0.25]{SinPodaa=23.png}
+  \label{fig:boat5}  
+\end{figure}
+     \scriptsize
+     Figura 2: Gráfico de segundos de ejecución en función de integrantes para las instancias con a=8
+     
+    Figura 3: Gráfico de segundos de ejecución en función de integrantes para las instancias con a=14
+    
+     Figura 4:Gráfico de segundos de ejecución en función de integrantes para las instancias con a=20
+   
+   Figura 5: Gráfico de segundos de ejecución en función de integrantes para las instancias con a=23
+
+	\normalsize
+  
+Sabemos que a no influye en la dependencia exponencial que vimos con i, pero sería bueno experimentar si efectivamente no hay relación entre a y el tiempo (es evidente que para un a extremadamente alto, se generarían inconsistencias por votos patológicos lo que analizaremos luego), que en principio no pareciera haber motivo para que la haya puesto que al fin y al cabo, todos los casos, salvo cuando se generan inconsistencias se chequean:
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.5]{SinPodaEncuesta.png}
+  \includegraphics[scale=0.5]{EncuestasPearson.png}
+  \label{fig:boat6}
+\end{figure}
+
+\scriptsize
+	Figura 6: Gráfico de segundos de ejecución en función de la cantidad de encuestas para 200 instancias aleatorias (azul)
+
+	Figura 7: Gráfico de segundos de ejecución en función de la cantidad de encuestas con indice de Pearson
+
+\normalsize
+
+Efectivamente, La Figura 6  muestra una relación muy leve entre la variable a y el tiempo empleado por el algoritmo, que disminuye al aumentar a. Más aún la Figura 7 nos muestra un p-value muy cercano a 0 lo que nos indica que hay una correlación entre la cantidad de encuestas y el tiempo. Además como el índice de correlación de Pearson de -0.26, esta correlación es muy leve y nos dice que hay una tendencia a ue entradas con una gran cantidad de encuestas tengan menor tiempo de ejecución. Esto tiene sentido con el análisis que venimos realizando ya que una gran cantidad de encuestas es mucho mas porbable que genere más inconsistencias y casos patológicos.
+
+Mirando la serie de ejecuciones que realiza el algoritmo sin poda, es claro que para cualquier caso siempre se ejecutan todas las ramas, verificando practicamente cada uno de los elementos de 
+$\mathcal{P} \{1,2,...,i\} $ que son $2^i$.  Esto no sucede cuando un individuo no es ni posible confiable ni posible no confiable, o sea genera una inconsistencia, este es el unico caso en el que se termina la ejecución y no se llega hasta las hojas del árbol. Esto nos indicaría que los casos con muchas inconsistencias serían factibles de ser mejores casos. No pareciera haber peor caso, sino más que en los que no hay muchas inconsistencias (cuando hay 0 encuestas, caso que no fue incluido en los tests aleatorios para ser tratado aparte).
+
+\underline{\textbf{Mejores casos:}} Como se analizó, tomamos casos donde las encuestas son muchas, lo que favorece claramente votos patológicos e inconsistencias, por lo que rapidamente las ramas se podan por no ser posible continuar con un conjunto que sea confiable. Se realizo el experimento con 400 muestras aleatorias generadas de la misma forma que las ya mencionadas, solo que esta vez la cantidad de encuestas fue fijada en $3*integrantes^2$,  200 muestras aleatorias de la misma forma que las ya mencionadas con cantidad de encuestas fijada en $integrantes^2$, 200 muestras aleatorias de la misma forma que las ya mencionadas con cantidad de encuestas fijada encon $integrantes*4$ y 200 muestras aleatorias de la misma forma que las ya mencionadas con cantidad de encuestas fijada en $integrantes$.
+
+\underline{\textbf{Peores casos:}} Como se analizó, tomamos casos donde las encuestas son siempre 0, con 200 muestras aleatorias generadas de la misma forma que las ya mencionadas pero con la cantidad de encuestas fijada en $0$. Cabe aclarar que dos instancias de igual cantidad de integrantes con 0 encuestas, ejecutan la misma serie de pasos, por ende bastaría haber tomado solo uno de cada cantidad de integrantes. 
+
+\begin{figure}[h!]
+  \includegraphics[scale=0.5]{CasosSinPoda.png}
+  \label{fig:boat7}
+\end{figure}
+ 
+\scriptsize 
+ Figura 8: Gráfico de segundos de ejecución en función de integrantes para instancias aleatorias (rojo), de posible mejor caso (azul) y de posible peor caso (verde), segun nuestra hipótesis.
+
+\normalsize
+
+En el gráfico (Figura 8) vemos como claramente lo esperado sucedió. En verde, siendo los que más tiempo tardan, acotando a todos los demás, están los propuestos como peores casos, efectivamente se cumple lo esperado, no hay nunca inconsistencia ni descarte de un conjunto, por ende se procesan todos los casos y es un peor caso. Más aún podemos notar que para instancias de una misma cantidad de integrantes, no hay variación considerable en el tiempo (lo que si sucedía en otros casos) ya que por la oservación realizada, todas las instancias con igual cantidad de integrantes son iguales ya que hay 0 encuestas y por ende ejecutan la misma serie de pasos (las condiciones iniciales son las mismas).
+
+ En rojo tenemos los ya analizados casos random (hechos aleatoriamente) y en azul tenemos los mejores casos que efectivamente cumplieron lo esperado, ya que acotan por debajo a todos los demas. Dentro de los azules vemos claramente tres grupos que se agrupan en graficos lineales, correspondientes a los diversos tamaños de encuestas con los que se experimento. El grupo de menor tiempo corresponde a los de cantidad de encuestas$3*integrantes^2$ e $*integrantes^2$, el segundo grupo corresponde a $4*integrantes$ y el tercer grupo que ya no acota tan bien, sino que toma un tiempo similar al promedio de los rojos es con $integrantes$. Esto se obtuvo filtrando en el gráfico dichas instancias de la experimentación. Efectivamente, al ser mayor la cantidad de encuestas, es más probable que los conjuntos ya no sean confiables y suceda alguna inconsistencia y eso se decida en la mitad del árbol de backtracking, cortando la ejecución de varias ramas de una. Al haber encuestas del orden de $integrantes^2$ es altamente probable que sucedan inconsistencias y más aún que haya votos patológicos que descartan una de las ramas (el individuo que vota patológico no puede ser confiable!).
+
+
+
+\subsection{Poda Máximo}
+Nuevamente, se experimento con los mismos $200$ casos generados aleatoriamente de la misma forma que las ya mencionadas con. Por los mismos motivos que cuando se hizo sin la poda. Se espera un crecimiento general exponencial también, ya que la poda no debería afectar la cantidad de operaciones en cuanto a su complejidad general (si bien cortamos ramas, no es posible asegurar que cortamos tantas como para reducir la complejidad en un caso general). Sí se espera que efectivamente el algoritmo tarde menos en la mayoría de las instancias (la poda en si es $\mathcal{O}(1)$, no aporta tiempo significativo su ejecución y como además se podan varias ramas en varios casos, debería tardar menos).
+
+\clearpage
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podamaximo.png}
+ \label{fig:boat8}
+\end{figure}
+
+\scriptsize
+	Figura 9: Gráfico de segundos de ejecución en función de integrantes para $200$ instancias aleatorias del algoritmo sin poda (rojo) y con la poda de máximo (azul).
+  
+  \normalsize
+
+Efectivamente, como podemos ver en el gráfico (Figura 9), la poda de máximos mejora considerablemente el algoritmo en la mayoría de los casos, si bien el grafico sigue siendo lineal (lo que al ser una escala logaritmica, indica dependencia exponencial), al podar varias ramas se reduce en gran número el tiempo de ejecución.  
+
+\underline{\textbf{Mejores casos:}} En los que encuentro rápido el máximo, por ende la poda se efectúa en el resto de las hojas.
+
+\underline{\textbf{Peores casos:}} Simétricamente en los que encuentro al final el máximo y más aún, evalúo los conjuntos de menor a mayor en cuanto a su cardinal.
+
+Para ambos casos, utilizaremos un conjunto de $integrantes$ variable con $integrantes$ moviendose entre 1 y 26 (una sola vez para cada uno, por lo visto en la experimentación sin poda) con 0 encuestas. Haremos dos testeos, en uno el Backtracking siempre evaluará primero que pasa si se incluye al individuo (será un mejor caso, pues la primer hoja a la que se llega será el máximo, que es incluir a todos) y en el segundo el Backtracking evaluará primero si no se incluye al individuo (será un peor caso,pues la ultima hoja es en la que se alcanza el máximo)
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podamaximo2.png}
+    \label{fig:boat10}
+\end{figure}
+
+\scriptsize
+
+ Figura 11: Gráfico de segundos de ejecución en función de integrantes para instancias aleatorias (rojo) de posible mejor caso (azul) y de posible peor caso (verde), segun nuestra hipótesis, del algoritmo con poda de máximo.
+\normalsize
+
+Como podemos observar en el gráfico (Figura 11) efectivamente nuestra hipótesis de mejor caso se comprueba ya que los mejores casos acotan por debajo al resto.
+
+En cuanto a nuestra hipótesis de peor caso es claro que experimentalmente falla, ya que hay considerables casos aleatorios que toman más tiempo de ejecución (para la misma entrada de $i$). Esto es porque que la primer hoja tiene cardinal $0$, luego la siguiente a ser evaluada sera de cardinal $1$ y así siguiendo (todas las de cardinal < al máximo alojado hasta ahora se saltean) y el conjunto de confiables va creciendo conforme vamos avanzando en el backtracking (vamos tomando las otras ramas de las no inclusiones). 
+
+Es destacable que cambiar el orden de ejecución no es considerablemente mejor, sino que la diferencia es tan solo lineal, en casos generales tampoco genera un beneficio explorar primero la rama de confiables ya que el máximo a buscar podría no incluir al primer elemento y si a los demás y hasta encontrarlo previamente exploramos la mitad del árbol. 
+
+Tiene sentido que esto suceda ya que generar casos peores es más complejo ya que precisamos no solo que el máximo se encuentre en una de las últimas hojas exploradas del Backtracking, sino además que una vez que hallamos un conjunto confiable de cierto cardinal no haya (en realidad que haya los menos posibles) conjuntos de menor cardinal que sean hojas del Backtracking aún no exploradas (sino entraría la poda). Si bien lo primero sucedía en la propuesta de peores casos, lo segundo no.
+
+\subsection{Poda Próximos}
+Nuevamente, se experimentó con $200$ casos generados aleatoriamente de la siguiente forma: se eligió una cantidad de individuos entre $1$ y $26$ y una cantidad de encuestas aleatoria entre $1$ y $26$, para cada una de esas encuestas se eligió un par de individuos donde el primero decia sobre el segundo que era confiable o no (según otra elección sea 0 o 1), donde cada una de estas elecciones se realizó de forma aleatoria con una distribución uniforme (en todos los casos se utilizó la función rand()  de librerías de C++ en el rango correspondiente - http://www.cplusplus.com/reference/cstdlib/rand/ -), por los mismos motivos que cuando se hizo sin la poda. Se espera un crecimiento general exponencial también, ya que la poda no debería afectar la cantidad de operaciones en cuanto a su complejidad general (si bien cortamos ramas, no es posible asegurar que cortamos tantas como para reducir la complejidad en un caso general). Esta vez no se espera que en todas las instancias se tarde lo mismo o menos ya que la complejidad de la poda no es $\mathcal{O}(1)$
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podaproximos1.png}
+    \label{fig:boat13}
+\end{figure}
+
+
+\scriptsize
+
+      Figura 13: Gráfico de segundos de ejecución en función de integrantes para $200$ instancias aleatorias del algoritmo sin poda (rojo) y con la poda de próximos (azul).
+      
+     \normalsize
+
+
+Como podemos ver en el gráfico (Figura 13), la poda de próximos no mejora  el algoritmo sin poda en la mayoría de los casos random que hemos elegido. Esto puede ser porque la cantidad de encuestas no es muy alta por lo que no permite podar demasiado (al no ser alta es poco probable que se den las condiciones que ejecutan la poda -hay muchos votos negativos a los que son mayores que uno y positivos a los menores-), lo cual tiene sentido ya que tanto integrantes como encuestas se movian (de forma random) entre 1 y 26. Igualmente, podemos ver que en muy pocos casos la poda parece influir ya que el tiempo es mucho menor al esperado (puntos azules por debajo). Esto podría tratarse de particularidades de las pocas muestras aleatorias que dieron este resultado o que en algunos casos hay realmente una mejoría. Trataremos de explorar más y comprender cuales fueron estas instancias. En principio, la primer observacion destacable es que en todas el número de encuestas era de los mayores (siempre mayor a 21), lo que nos indicaría que quizás la presencia de inconsistencias o votos patológicos podría influir. Como se esperaba, en muchos casos promedio la poda de próximos tardo un poco más que el algoritmo sin poda (lo que puede ser debido a que como vimos actualizar próximos recorre linealmente vectores, lo que puede aumentar la cantidad de operaciones y por ende el tiempo de ejecución)
+
+
+Veamos si la poda mejora al haber más encuestas (queremos ver si mejora respecto del algoritmo sin poda, el algoritmo con poda en sí mejora por el mismo motivo por el cual mejoraba el sin poda lo cual se verificó con un gráfico que dio análogo al de sin poda -no lo incluyo por cuestion de espacio y sería analizar de nuevo lo mismo-). Para esto, como en el algoritmo sin poda, se realizo el experimento con 400 muestras aleatorias en la cantidad de integrantes (menor a 26) y la cantidad de encuestas fijada en $3*integrantes^2$, 200 muestras con $integrantes^2$, 200 muestras con $integrantes*4$ y 200 con $integrantes$. A continuación el gráfico que lo compara con los resultados de los mismos experimentos del algoritmo sin poda.
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.4]{Podaproximos2.png}
+    \label{fig:boat14}
+     \includegraphics[scale=0.4]{Podaproximos3.png}
+    \label{fig:boat15}
+  
+\end{figure}
+
+    \scriptsize
+    
+    Figura 14: Gráfico de segundos de ejecución en función de integrantes para instancias aleatorias del algoritmo sin poda (rojo) y sus mejores casos (verdes) y con la poda de próximos (azul) y sus mejores casos (amarillo)
+    
+    Figura 15: Gráfico de segundos de ejecución del tercer grupo (encuestas>105) para el algoritmo sin poda (verde) y con la poda de próximos (amarillo)
+
+	\normalsize
+
+En el gráfico (Figura 14) vemos como claramente lo esperado sucedió. Los puntos amarillos y verdes se agrupan en tres grupos, como sucedía en el algoritmo sin poda. El grupo de menor tiempo corresponde a los de cantidad de encuestas $3*integrantes^2$ e $*integrantes^2$, el segundo grupo corresponde a $4*integrantes$ y el tercer grupo que ya no acota tan bien, sino que toma un tiempo similar al promedio de los rojos y azules es con $integrantes$. Esto se obtuvo filtrando en el gráfico dichas instancias de la experimentación. Los grupos se forman por el mismo motivo que ya se analizó en el algoritmo sin poda, pero es destacable que en el grupo que tardo menor tiempo se nota una clara diferencia temporal entre los amarillos y los verdes. Esto se nota claramente en el otro gráfico (Figura 15). Para una cantidad de encuestas muy altas, es muy probable que sucedan los votos que permiten realizar la poda, por ende esta se ejecuta y se nota la diferencia respecto del algoritmo sin poda. Lo que podría también entrar en juego es que en caso de un voto patológico en el algoritmo sin poda se marcaba en la matriz y luego se analizaba (y ese análisis se medía en  tiempo de ejecución) y en el algoritmo con la poda de próximos ni se incluía en próximos (y esa decisión se tomaba entre todos los cin y no queríamos considerar el tiempo de lectura y escritura, por lo que no se consideraba). Aunque también puede entrar en juego que decidimos antes sobre la inconsistencia. Con hacer el análisis más exhaustivo en otro tipo de mejores casos podremos ver si efectivamente la poda mejora el tiempo o no, en principio todas estas experimentaciones parecen indicar que no.
+
+
+\underline{\textbf{Mejores casos:}} En los que hay muchas encuestas negativas sobre los próximos y positivas sobre los anteriores, ya que permite reducir rapidamente el tamaño de próximos. Ya se analizo en el caso al aumentar considerablemente la cantidad de encuestas y por ende de estos casos. Por último otro tipo de casos que podrían ser mejores casos y no fueron analizados son las encuestas en las que si x habla sobre y, dice que es confiable si $y<=x$ y dice que no lo es si $y>x$ ya que en estos casos actualizar próximos efectivamente reduce la lista de próximos al ejecutarse.
+
+
+
+
+
+\underline{\textbf{Peores casos:}} En los que no hay encuestas negativas sobre los próximos y no hay encuestas positivas sobre los anteriores, próximos nunca reduce su tamaño, por ende es igual que el caso sin poda, incluso debería tardar un poco más por el procesamiento de actualizar próximos (que no hace nada más que recorrer linealmente el vector de próximos) aunque son muy pocas operaciones (en comparación al total realizado) las que hacemos de más y esto podría ser irrelevante. Para esto tomamos casos donde las encuestas son siempre 0, con una muestra para cada cantidad de integrantes entre 1 y 26.
+
+En cuanto a los peores casos son los mismos que en el algoritmo sin poda pero aquí podremos notar si es significativa la diferencia que aporta el procesamiento de actualizar próximos (que no sirve de nada en  este caso):
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podaproximos4.png}
+    \label{fig:boat16}
+
+\end{figure}
+
+\scriptsize
+      Figura 16: Gráfico de segundos de ejecución en función de integrantes para instancias de peor caso del algoritmo sin poda (rojo) y con la poda de próximos (azul)
+   
+
+\normalsize
+
+Como se ve en el gráfico (Figura 16), se trata de peores casos y de un tiempo de ejecucion muy similar al algoritmo sin poda, la influencia de actualizar próximos no se nota demasiado. Esto puede ser ya que como vimos, gran parte de la actualización de próximos era chequear la condición de si era posible confiable (o no) los individuos de próximos, que era algo que al fín y al cabo el algoritmo sin poda lo hace (aunque en otro orden, lo hace luego).
+
+En cuanto a los mejores casos, se ejecutará actualizar próximos debido a que las enceustas son de forma tal  que al actualizar próximos efectivamente se sacan elementos y por ende se ejecuta la poda (sobre alguien mayor siempre se dice que no es confiable y sobre alguien menor simpre se dice que es confiable). Se realizo el test con instancias aleatorias en la cantida de integrantes y encuestas entre $1$ y $26$ pero las instancias en el algoritmo con la poda tenían la característica recién descripta, o sea eran de mejor caso. Para ver si la poda se ejecutó se compara con el gráfico del algoritmo sin poda: 
+
+\clearpage
+
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podaproximos5.png}
+    \label{fig:boat17}
+      
+\end{figure}
+
+\scriptsize
+
+Figura 17: Gráfico de segundos de ejecución en función de integrantes para instancias aleatorias del algoritmo sin poda (rojo) e instancias de mejor caso con la poda de próximos (azul).
+
+\normalsize
+
+Vemos nuevamente (en la Figura 17) que la poda no es buena en lo que según analizamos deberían ser mejores casos, no se nota ninguna mejoría clara en el tiempo de ejecución respecto del algoritmo sin poda.
+
+Concluimos entonces que la poda no es efectiva, no reduce practicamente el tiempo de ejecución en general. Esto podría ser debido a que el análisis que efectuamos al actualizar próximos y decidir sobre un individuo (previo a que actual llegue a ese individuo) es exactamente lo que hacemos en el algoritmo sin poda pero más tarde, cuando decidimos si un individuo entra o no. De hecho cuando sacamos a alguien de próximos es porque sabemos no puede ser confiable; en el algoritmo sin poda, cuando llegue el momento, la función que chequea si no genera inconsistencia que actual no sea confiable tiene la misma complejidad que actualizar próximos (recorrer linealmente los confiables) y en caso de no poder ser confiable esa rama no se continúa. Basicamente lo que hacía esta poda es adelantarse al análisis que igualmente se iba a hacer luego. Cuando decidíamos si incluiamos o no (a un individuo mayor a actual) al actualizar próximos era porque en el algoritmo sin poda una de las dos ramas no se ejecutaría en el momento en que actual alcanzara a ese individuo (y el costo de verificar hacerlo es además el mismo en cuanto a complejidad de peor caso). La poda mira varios niveles más abajo del arbol y decide sobre ellos, pero esa elección se hubiera realizado igualmente solo que más adelante. Esto indica que según el análisis que hemos hecho no se trata de una poda esta parte que en principio mi hipotesis era que sí; se verificó experimentalmente que no y permitió reanalizar la poda y llegar a esta conclusión.
+
+Sin embargo, sí sigue siendo una poda, puesto que en caso de que un individuo $k$ produzca una inconsistencia, en el algoritmo sin poda lo notamos a la hora de decidir sobre el; sin embargo con esta poda lo podemos notar mucho antes porque si un individuo $h<k$ que decidimos sea confiable dijo que $k$ no era confiable, ahi chequeamos inconsistencia de decidir que $k$ no sea confiable, pues actualizarproximos lo hace al sacarlo de próximos y en caso de haber inconsistencia, podamos la rama en el nivel $h$ en vez de en el nivel $k$. De esta forma nos ahorramos todas las ramificaciones entre los niveles $h$ y $k$. Esto es claro que sucede muy poco y practicamente no mejora el tiempo de ejecución como se vio en la experimentación.
+
+Sin embargo, se pudieron encontrar algunos mejores casos que explican un menor tiempo de ejecución. Este caso es si no hay encuestas salvo que el primero dice que el segundo es confiable, el segundo dice que el último no es confiable y el último dice que el primero es confiable. En la rama en que incluimos al primero, estamos obligados a incluir al segundo pues el primero dijo que era confiable, luego en el algoritmo con la poda sacamos al último de próximos y salta la inconsistencia pues el primero dijo que era confiable y el primero lo era. En el caso en que no está la poda, la inconsistencia aparecerá en el último nivel, habiendo procesado muchisimas ramas innecesarias. Hay que considerar también que la poda tiene su complejidad, por lo que se notará para casos más grandes. Se corrió este caso para instancias con integrantes entre 1 y 26:
+
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{Podaproximos6.png}
+    \label{fig:boat17}
+      
+\end{figure}
+
+\scriptsize
+
+Figura 18: Gráfico de segundos de ejecución en función de integrantes para instancias de posible mejor caso de la poda de próximos para el algoritmo sin poda (azul) y el algoritmo con poda (amarillo).
+
+\normalsize
+
+Vemos en el gráfico (Figura 18) que al aumentar i cada vez más se ve la influencia de la poda, siendo mayor la diferencia entre el tiempo de ejecución de ambos algoritmos. En los casos más pequeños practicamente no se nota (no hay tanta diferencia entre hacer la mitad de los casos, y además el algoritmo con poda ejecuta varias veces la poda, lo que tiene complejidad $\mathcal{O} (i^2)$ que no es despreciable. Por esto mismo se eligió una escala lineal. Ratificamos que es una poda y la existencia de casos donde se ejecuta, pero sigue siendo una mala poda ya que no hay una gran diferencia en tiempos de ejecución.
+
+ Por último queda analizar el refinamiento que hace la poda en conjunto con la poda de máximo, ya que como hemos analizado, llevar un registro de cuantos son los posibles confiables (lo que se ve en próximos) refina mucho más la poda de máximo y permite darse cuenta antes cuando una rama no alcanzará el máximo y descartarla. Para concluir el informe, estudiaremos la relación entre ambas podas:
+ 
+\subsection{Ambas Podas}
+Como a lo largo de todas las experimentaciones, nuevamente se corrió una serie de $200$ instancias generadas aleatoriamente de la siguiente forma: se eligió una cantidad de individuos entre $1$ y $26$ y una cantidad de encuestas aleatoria entre $1$ y $26$, para cada una de esas encuestas se eligió un par de individuos donde el primero decía sobre el segundo que era confiable o no (según otra elección sea 0 o 1), donde cada una de estas elecciones se realizó de forma aleatoria con una distribución uniforme (en todos los casos se utilizó la función rand()  de librerías de C++ en el rango correspondiente - http://www.cplusplus.com/reference/cstdlib/rand/ -). Como se mencionó, se espera una leve mejoría en el tiempo de ejecución respecto del algoritmo con la poda de máximo exclusivamente, aunque es mucho más dificil que se note una poda sobre otra, cuantas más agregamos, cada vez queda menos del arbol por podar y hay muchas ramas que ambas podas cortarían.
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{dospodas1.png}
+    \label{fig:boat18}
+    
+\end{figure}
+
+\scriptsize
+  Figura 19:Gráfico de segundos de ejecución en función de integrantes para instancias $200$ aleatorias del algoritmo sin poda (rojo), con la poda máximo (verde) y con las dos podas (azul).
+
+\normalsize
+En el gráfico (Figura 19) vemos que en los casos promedio, con relativamente pocas encuestas (entre $1$y $26$) no hay una influencia considerable de la mejoría en la poda, pero siempre tarda menos tiempo que con la poda de máximo solamente.
+
+Para ver si hay mejoría de la poda en ciertos casos, deberíamos querer que el conjunto de próximos se reduzca con mucha velocidad, para ello sería bueno poner instancias en las que todo individuo diga que varios de los siguientes no son confiables. Por ende se correran 200 instancias aleatorias de la misma forma (se eligió una cantidad de individuos entre $1$ y $26$ y una cantidad de encuestas aleatoria entre $1$ y $26$, para cada una de esas encuestas se eligió un par de individuos donde el primero decía sobre el segundo que era confiable o no (según otra elección sea 0 o 1), donde cada una de estas elecciones se realizó de forma aleatoria con una distribución uniforme (en todos los casos se utilizó la función rand()  de librerías de C++ en el rango correspondiente - http://www.cplusplus.com/reference/cstdlib/rand/ -)), pero esta vez los votos no serán aleatorios sino que siempre serán sobre alguien mayor y negativos. Se espera que en instancias de mejor caso de la poda, quizás se note levemente el refinamiento:
+
+\clearpage
+
+\begin{figure}[!ht]
+  \includegraphics[scale=0.5]{dospodas2.png}
+    \label{fig:boat19}
+ \end{figure}
+
+\scriptsize
+     Figura 20: Gráfico de segundos de ejecución en función de integrantes para instancias $200$ aleatorias (azul) y las de mejor caso (amarillo) del algoritmo con dos podas
+\normalsize
+
+Efectivamente en el gráfico (Figura 20) se ve una mejoría, pero es muy pequeña lo que tiene sentido ya que simplemente podamos una rama unos niveles antes porque sabemos antes que la rama no conducirá al conjunto confiable máximo buscado. Esto es porque simplemente estamos haciendo un refinamiento de la poda, no estamos cortando pedazos del árbol que no hubieramos cortado sin el refinamiento, solo que lo estamos haciendo antes, cortando simplemente algunas ramas más de ejecución de diferencia. Sin embargo, es destacable que pudimos ver experimentalmente que hubo un refinamiento.
+
+\section{Conclusiones}
+
+Concluimos entonces que el algoritmo cumple lo esperado ya que tiene una complejidad exponencial respecto de la cantidad de integrantes y que no hay relación alguna con la cantidad de encuestas (más que en los casos donde son excesivamente muchas y aparecen votos patológicos), lo que pudimos comprobar experimentalmente. En cuanto a las podas, la poda de máximo fue efectiva según se vió en la experimentación y pudimos concluir también que  (en contra de lo esperado incialmente) la poda de próximos no hacía más que cambiar el orden de las operaciones que se realizan en total (lo que hace que la hipotesis sea que uno realizará menos operaciones ya que descarta operaciones futuras por hacer algunas ahora, pero es -en cuanto a complejidad- el mismo el costo de las operaciones que haríamos ahora o en un futuro y las hacemos ahora si y solo si las haríamos en un futuro). La característica que sí hacia que sea efectivamente una poda no influyo en la práctica en el tiempo de ejecución como se vio en la experimentación. Pudimos ver también que la de próximos si perimitió un refinamiento sobre la poda de máximo, lo que se pudo comprobar experimentalmente. El refinamiento mejoró aún más el tiempo de ejecución, aunque ya no tanto (en comparación a como lo hizo la poda de máximos con el algoritmo sin poda), ya que cuantas más podas incluimos cada vez podan menos puesto que varias ramas son cortadas por ambas (y al incluir la última, estas ya estaban podadas). Particularmente esto sucede con el refinamiento, en comparación con la poda sin refinamiento ya que solo se marca la diferencia de tiempo de ejecución por cortar las ramas que corta el refinamiento y no corta la poda incial.
+
+
+\end{document}

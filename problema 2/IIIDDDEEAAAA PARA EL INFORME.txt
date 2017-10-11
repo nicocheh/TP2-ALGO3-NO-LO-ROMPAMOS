@@ -1,0 +1,23 @@
+quizas no depende el tiempo de la cantidad de aristas...
+no se igual, pero maybe. Porque cuando haces bfs m=n-1
+pero en el primero hago la matriz de incidencia... pero hago tantas
+cosas...
+OJOOOO al final creo que si dependia, porque para crear el agm recorro las listas de vecinos, no afecta a bfs pero si al agm. SE puede aclarar esa diferencia en el informe, porque acotaba m por n2 pero en realidad era m en la complejidad del 2.1
+
+OJOOOOOOO en el informe habria que aclarar que las instancias que genero estan bien, es decir demostrar que todo grafo conexo se puede generar conectando las cosas al ppio y despues agregando aristas al azar.
+
+justificar un poco el rango de pesos de las aristas?? necesitan un buen rando para generar casos en los que todas las aristas son distintas ponele, o en que 1 arista pesa más que todas las otras.
+
+hacer 2 tipos de experimentacion, con aristas random para ver casos raros, y aristas fijas para ver si afecta el tiempo de procesamiento
+
+Clarar que se tuvo cuidado con no generar multigrafos???
+
+PEOR Y MEJOR CASO???? :
+
+maybe para el 2.2 es mejor tener camino maximo corto, no largo. Para al final tener que construir un camino mas corto, porque al recorrerlo no se como podrías hacer diferencia. (lo peor seria tener un camino muy largo, ie toda una sola linea)
+
+para el 2.1 quizás es bueno tener pocas aristas porque seria mas rapido ver las listas de vecinos cuando te vas actualizando los vecinos del que acabas de agregar?? y quizas el peor sería el completo. Habría que relacionarlo con la complejidad teorica
+
+probar mejores/peores casos para ambas consultoras a la vez? no se si no sera dificil igual
+
+
