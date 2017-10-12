@@ -1,0 +1,16 @@
+CAMBIOS PRIORITARIOS:
+-Terminar el 3 soma, que lo leamos mato y yo y corrijamos.
+-Que todos leamos una vez todo el tp y lo corrijamos, agregando tildes y pequeñas huevadas para que se entienda. Cualquier cambio en una frase
+traten de que sea lo mas minimo para no sacar nada de la idea de nadie, y si creen que cambia algo por mas pequeño que sea avisen al otro y que de
+el ok, mejor preguntar de mas que sacar algo que quizas era relevante.
+
+CAMBIOS IMPORTANTES
+- Corregir en los lugares donde diga segundos y deba ir ticks, tanto en pie de figuras como en las imagenes mismsa (con paint se puede)
+-Corregir en el ejercicio 1 yo puse el nombre de las figuras con scriptsize abajo, el tema es que en la numeración automática no las cuenta
+por lo que hay dos figuras 3, dos figuras 4 y ds figuras 5. No las quiero cambiar porque corren todas las de abajo y por ende cada vez que 
+nombremos cierta imagen seria incorrecta. Si se puede, cambiar y poner bien la mia, que sea figura 3 con 3 subfiguras y recordar de ahi en adelante
+cambiar todas las veces que se nombra una figura para que quede bien porque quedaria una nueva numeracion
+
+CAMBIOS NO TAN IMPORTANTES:
+-en los graficos de clientes fijos y fabricas fijas y rutas moviles, poner si se puede una linea. Yo (chebar) probe con plot asi de una y queda feo,
+no se como y tampoco se si vale perder teimpo en esto
