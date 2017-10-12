@@ -3,6 +3,8 @@ CAMBIOS PRIORITARIOS:
 -Que todos leamos una vez todo el tp y lo corrijamos, agregando tildes y pequeñas huevadas para que se entienda. Cualquier cambio en una frase
 traten de que sea lo mas minimo para no sacar nada de la idea de nadie, y si creen que cambia algo por mas pequeño que sea avisen al otro y que de
 el ok, mejor preguntar de mas que sacar algo que quizas era relevante.
+-Incluir en la carpeta el pdf terminado. Armar un .zip y enviar por mail el .zip  todos los archivos. ENVIAR ANTES DE LAS 23:00 para evitar problemas.
+De lo posible estemos todos conectados el jueves a esa hora aprox por las dudas
 
 CAMBIOS IMPORTANTES
 - Corregir en los lugares donde diga segundos y deba ir ticks, tanto en pie de figuras como en las imagenes mismsa (con paint se puede)
