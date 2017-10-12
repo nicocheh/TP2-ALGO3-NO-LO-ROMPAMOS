@@ -585,60 +585,96 @@ Primero, se genero una serie de casos aleatorios, generados de la misma forma qu
 \caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias.}
 \end{wrapfigure}
 
- La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$ (los nodos mayores a $F$ serán los clientes, y los menores las fábricas). Se corrieron casos con $C$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $C$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C+F$ y $F$ se ejecutaron $100$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
+ La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$ (los nodos mayores a $F$ serán los clientes, y los menores o iguales las fábricas). Se corrieron casos con $C$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $C$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C$ y $F$se ejecutaron $10$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
 
-Como vemos en los gráficos, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente lo estemos resolviendo en $\mathcal{O}(|C|^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado, donde se puede ver (salvo para pocos clientes) que el gráfico es acotable por una constante (ver gráfico ampliado). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. 
+Como vemos en el gráfico de la Figura 9, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente estamos resolviendo el problema en $\mathcal{O}(|C|^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado, donde se puede ver (salvo para pocos clientes) que el gráfico es acotable por una constante (ver figura 10.a). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, como la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. Pero dejando de lado estas instancias de $	|C|$ pequeño, se ve que se puede acotar por una constante como se esperaba teóricamente (ver Figura 10.b).
 
-\begin{figure}[h!]
-  \includegraphics[scale=0.6]{wasdcomplejidad1.png}
-  \includegraphics[scale=0.6]{zoom1p3.png}
+%\begin{figure}[h!]
+%  \includegraphics[scale=0.6]{wasdcomplejidad1.png}
+%  \includegraphics[scale=0.6]{zoom1p3.png}
 
+%\end{figure}
+%\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias.}
+
+%\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias, con el eje x acotado entre 20 y 60.}
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{wasdcomplejidad1.png}
+        \caption[center]{eje x entre 0 y 60 (todas las instancias).}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{zoom1p3.png}
+        \caption{eje x acotado entre 20 y 60.}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias}
 \end{figure}
-\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias.}
 
-\scriptsize{ Figura ??: Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias, con el eje x acotado entre 20 y 60.}
 
 \normalsize
 
-Como ya hemos analizado en el problema 2 y se ve en el pseudocódigo, no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomo aleatoria, teniendo la certeza de que no influiría en las otras. 
+Sabemos que todos los pesos son enteros (del tipo int de C++) y el costo de hacer cualquier operación sobre los mismos no cambia (al menos para el modelo de complejidades que utilizamos, en que suponemos de costo básico todas estas operaciones). Como en el algoritmo, lo que se ve claramente en el pseudocódigo, lo único que hacemos con los pesos es compararlos de a pares para decidir cual es el menor e incluirlo y además lo sumamos al costo total. Como la comparación y la suma no dependen de qué entero sea, podemos concluir que no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomó aleatoria, teniendo la certeza de que no influiría en las otras. 
 
-Por otro lado, si bien la cantidad de fábricas no aparece en la complejidad teórica, al empezar el algoritmo "pintamos" todas al principio de Prim y revisamos todos sus vecinos para actualizar las distancias al AGM, y solo luego realizamos normalmente el algoritmo de Prim. Pero si recordamos el enunciado y la condicion de que  $|F|<|C|$, notamos que este paso inicial de revisar todos los vecinos está acotado por $|C|$, razón por la que queda la complejidad teórica explicada previamente. Pero a la hora de efectivamente ejecutar el algoritmo por casos de prueba estos pasos se hacen, y aunque estén acotados teóricamente, con una mayor cantidad de fábricas habrá que chequear más vecinos en el paso inicial, aumentando el tiempo necesario de ejecución.Para comprobar esto realizamos los siguientes gráficos:
+Por otro lado, si bien la cantidad de fábricas no aparece en la complejidad teórica, al empezar el algoritmo de PrimModificado las "pintamos" todas y revisamos todos sus vecinos para actualizar las distancias al AGM. Pero si recordamos el enunciado, este nos da la condicion de que  $|F|<|C|$, razón por la que no influye $|F|$ en la complejidad teórica explicada previamente. Pero a la hora de efectivamente ejecutar el algoritmo, estas operaciones se realizan y, aunque estén acotados teóricamente, con una mayor cantidad de fábricas habrá que chequear más vecinos en el paso inicial, lo que aumenta el tiempo de ejecución. Para comprobar esta correlacion realizamos el siguiente grafico:
 
-\textbf {OJO, NO SE SI ESTOS SIGUEN SIRVIENDO PORQUE ES LA FORMA VIEJA DE REALIZAR LOS CASOS ALEATORIOS, Y DICE LO OPUESTO QUE LA CONCLUSIÓN DEL PEOR Y MEJOR CASO. A ESTA ALTURA ME PARECE QUE DIRECTO METERÍA LOS MEJORES Y PEORES CASOS QUE CONFIRMAN LO DE ARRIBA, PERO SI SE LES OCURRE ALGO PIOLA PARA METER LO METEMOS ACA. LO DE PEARSON SI ESTÁ BUENO DEJARLO, Y PODEMOS DECIR QUE ESE GRÁFICO NOS CONVENCIÓ Y POR ESO GENERAMOS ESTOS PEORES Y MEJORES CASOS}
-
-\begin{wrapfigure}{l}{0.4\textwidth}
+\begin{wrapfigure}{R}{0.6\textwidth}
 \centering
-\includegraphics[width=0.4\textwidth]{noDepFabricas.png}
-\caption{ Gráfico de segundos de ejecución en función de cantidad de fabricas para instancias aleatorias.}
+\includegraphics[scale=0.6]{Fabricas-clientes.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias con $|fabricas|=|clientes|-k$ con $k=1, 10, 20, 30, 40, 50$.}
 \end{wrapfigure}
 
-Si vemos el gráfico, efectivamente hay correlación entre la cantidad de fábricas y el tiempo de ejecución. Vemos que cada vez la dispersión es menor cuando aumenta la cantidad de fábricas, lo que tiene sentido ya que como experimentamos con grafos de tamaño hasta $60$ ($|F|+|C|=60$) cuando fijamos $|F|$ en un número grande, reducimos considerablemente el rango de valores que puede tomar $|C|$ y por ende el rango de valores que toma el tiempo de ejecución (por ejemplo, cuando $|F|$ es 30, obligatoriamente $|C|$ debe serlo). Por esto, cuando $|F|$ crece, el tiempo de ejecución del caso más rápido crece ya que se da con el menor $|C|$ posible y al crecer $|F|$ lo hace $|C|$ pues $|F|<|C|$. Pero como vemos, el tiempo de ejecución de los casos mas lentos, se mantiene siempre igual, ya que se da con el caso de máximo $|C|$ posible y para cualquier $|F|$ dicho caso es posible. Basicamente pudimos notar que la cantidad de fábricas si influye en la cota inferior del tiempo de ejecución, pero no en la superior ya que esta estará dada por la cantidad de clientes.	
+Como vemos en la Figura 11, cuanta mayor cantidad de fabricas tengamos, en relación con la cantidad de clientes, el tiempo de ejecución es mayor (fabricas=clientes-1 es el de mayor y fabricas=clientes-50 es el de menor). Como se explico anteriormente, esto tiene sentido ya que al principio del algortimo chequeamos todos los vecinos de las fábricas (al ser los primeros nodos pintados en Prim).
 
+Queda por analizar entonces la dependencia del tiempo de ejecución en funcion de la variable $R$.
+ 
+ 
 
+ Sabemos que la complejidad del algoritmo es $\mathcal{O} (|C|^2)$, pero si recordamos la complejidad teórica cuando calculamos la del algoritmo de Prim, en un momento recorremos todos los vecinos de un nodo, y como repetimos esto para todos los nodos, en total lo hacemos $X(G)$ veces que en este caso es $R$. Luego, como $|V(G)|^2 \geq |X(G)|$ para todo grafo G, acotamos el $R$ por $|C|^2$, pero este $R$ influye en el tiempo de ejecución,
 
-Queda analizar la dependencia del tiempo de ejecución en funcion de la variable $R$.
-
+ 
+ 
  \begin{wrapfigure}{R}{0.4\textwidth}
 \centering
 \includegraphics[scale=0.4]{pearson.png}
 \caption{ Gráfico de segundos de ejecución en función de cantidad de rutas para instancias aleatorias con el índice de pearson.}
 \end{wrapfigure}
-
- Si bien sabemos que la complejidad del algoritmo es $\mathcal{O} (|C|^2)$, pero si recordamos la complejidad teórica cuando calculamos la del algoritmo de Prim, en un momento recorremos todos los vecinos de un nodo, y como repetimos esto para todos los nodos que son clientes, en total lo hacemos $X(G)$ veces que en este caso es $R$. Luego, como $|V(G)|^2 \geq |X(G)|$ para todo grafo G, acotamos el R por $|C|^2$, pero influye en el tiempo de ejecución este $R$, lo que nos lleva a pensar que dentro de instancias de igual tamaño, las que tengan una mayor cantidad de aristas tendrán un mayor tiempo de ejecución y las que tengan menos aristas un menor tiempo de ejecución.
-
-
-
-\textbf{SI ESTO NO SUCEDIO ASI EFECTIVAMENTE DE + ARISTAS + TIEMPO Y - ARISTAS - TIEMPO CAMBIARLO} Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de R. 
-Efectivamente en el gráfico parecía verse una correlación, lo que verificamos utilizando el índice de pearson, como se puede ver en la siguiente figura:
-
  
+ 
+ 
+  
+ lo que nos lleva a pensar que dentro de instancias de igual tamaño, las que tengan mayor cantidad de aristas tendrán un mayor tiempo de ejecución y las que tengan menos aristas un menor tiempo de ejecución.
 
-Efectivamente, hay correlación (ya que el p-value es 0) y como el indice de pearson en positivo, este nos indica que al crecer la cantidad de rutas, crece el tiempo de ejecución. Pero también podemos ver que pareciera suceder lo mismo que con las fábricas ya que cuando crece la cantidad de rutas, el rango de valores que toma el tiempo de ejecución decrece.
+
+ Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de $R$. Efectivamente en el gráfico parecía verse una correlación, lo que verificamos utilizando el índice de pearson, como se puede ver en la Figura 12.
 
 
- Trataremos de entender si esto es porque al crecer $R$ crece $|F|+|C|$, lo que fuerza a que crezca $|C|$ (puesto que $R \leq (|C|+|F|)(|C|+|F|-1)/2$ ya que la maxima cantida de aristas -rutas- se da en el completo $K_{|C|+|F|}$, que es el que cumple la igualdad). Trataremos de buscar como es esta relación entre $R$ y el tiempo de ejecución, como también mejores y peores casos:
+Efectivamente, hay correlación (ya que el p-value es 0) y como el índice de pearson en positivo, este nos indica que al crecer la cantidad de rutas, crece el tiempo de ejecución. 
+
+Trataremos de entender si esto es porque al tomar valores mayores de $R$, deben ser mayores los de $|F|+|C|$ (puesto que $R \leq (|C|+|F|)(|C|+|F|-1)/2$ ya que la maxima cantida de aristas -rutas- se da en el completo $K_{|C|+|F|}$, que es el que logra la igualdad) y por ende, como hemos visto, mayor el tiempo de ejecución. Para esto, fijamos la cantidad de fábricas y clientes y analizamos la relación del tiempo de ejecución respecto de $R$ siendo esta la única variable libre.
 
 
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{60clientes.png}
+        \caption[center]{$|C|$=60}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{50clientes.png}
+        \caption{$|C|$=50}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{40clientes.png}
+        \caption{$|C|$=40}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}    
+    \caption{Gráfico de segundos de ejecución en función de $|R|$ para valores fijos de $|C|$ y $|F|$}
+\end{figure}
+
+En la Figura 13, tenemos en cada subfigura una cantidad de clientes fijada (en 60, 50 y 40) y para cada una de esas subfiguras, tenemos en distintos colores distintas cantidades de fábricas dada esa cantidad de clientes. Lo que se grafico es el tiempo de ejecución en función de la cantidad de rutas y se puede ver que en todos los valores de c, a mayor cantidad de rutas mayor tiempo de ejecución (ya que en todos los colores es creciente). Más aún, volvemos a verificar la dependencia según la cantidad de fábricas ya que los colores que representan mayor cantidad de fábricas  tienen un mayor tiempo de ejecución
 
 \textbf{SOMA ACA EMPEZAS VOS, TODO TUYO, MEJORES Y PEORES CASOS}
 
