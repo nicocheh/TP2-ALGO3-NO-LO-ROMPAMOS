@@ -442,7 +442,7 @@ Por otro lado, para entender los contextos de uso en los que este algoritmo most
     \caption{Tiempo de ejecución de la consultora 1 para el mejor y el peor caso}
 \end{figure}
 
-Se puede observar en las figuras 4.a y 4.b como, si bien se mantiene a grandes rasgos la dependencia de la cantidad de servidores ya confirmada en la figura 3, se ve un rendimiento peor en la figura 4.b (los grafos completos) que en la 4.a (los àrboles). Se mostrará en la figura 5, como estas instancias construidas para resultar en los tiempos de ejecución màs extremos, muestran tiempos de ejecución que acotan a los tiempos de los casos aleatorios.
+Se puede observar en las figuras 4.a y 4.b como, si bien se mantiene a grandes rasgos la dependencia de la cantidad de servidores ya confirmada en la figura 3, se ve un rendimiento peor en la figura 4.b (los grafos completos) que en la 4.a (los árboles). Se mostrará en la figura 5 que estas instancias son las de tiempos de ejecución más extremos ya que muestran tiempos de ejecución que acotan a los tiempos de los casos aleatorios.
 
 \begin{figure}[H] % Example image
     \includegraphics[width=0.8\textwidth]{graficosEj2/prm1}
@@ -450,11 +450,11 @@ Se puede observar en las figuras 4.a y 4.b como, si bien se mantiene a grandes r
     \caption{Comparación de los tiempos de ejecución para la consultora 1}
 \end{figure}
 
-Se puede apreciar en la figura 5, que si bien hay casos excepcionales dados por las incertezas de la medición empírica, las instancias aleatorias presentan una eficiencia acotada por los mejores y peores casos predichos. Con esto se concluye que efectivamente el tiempo de ejecución que requiere la consultora 1 depende de la cantidad de aristas del grafo de entrada, si bien estos no aumentan la complejidad teórica, si pueden causar una duplicación en el  tiempo de ejecución entre los peores y los mejores casos.
+Se puede apreciar en la figura 5, que si bien hay casos excepcionales dados por las incertezas de la medición empírica (condiciones excepcionales de la ejecución en la computadora en particular), las instancias aleatorias presentan una eficiencia acotada por los mejores y peores casos predichos. Con esto se concluye que efectivamente el tiempo de ejecución que requiere la consultora 1 depende de la cantidad de aristas del grafo de entrada. Si bien estos no aumentan la complejidad teórica, sí pueden causar una considerable diferencia en el tiempo de ejecución entre los peores y los mejores casos.
 
 \subsubsection{Consultora 2}
 
-Al igual que con la consultora 1, el estudio teórico de la complejidad del algoritmo lleva a esperar ciertos resultados en la etapa experimental. En este caso particular, se verá que el tiempo de ejecución depende de la cantidad de servidores del árbol a analizar por la consultora 2. La relación entre el tiempo y el tamaño de entrada es de forma lineal, y no puede variar según la cantidad de aristas ya que el arbol siempre tiene la misma cantidad. Lo que si afectará ligeramente el tiempo de ejecución es el largo del camino máximo del arbol, como se verá en el estudio de los peores y mejores casos del algoritmo.
+Al igual que con la consultora 1, el estudio teórico de la complejidad del algoritmo lleva a esperar ciertos resultados en la etapa experimental. En este caso particular, se verá que el tiempo de ejecución depende de la cantidad de servidores del árbol a analizar por la consultora 2. La relación entre el tiempo de ejecución y el tamaño de entrada es de forma lineal, y no puede variar según la cantidad de aristas ya que el arbol siempre tiene la misma cantidad. Lo que si afectará ligeramente el tiempo de ejecución es el largo del camino máximo del arbol, como se verá en el estudio de los peores y mejores casos del algoritmo.
 
 \begin{figure}[H] % Example image
     \begin{subfigure}[b]{0.45\textwidth}
@@ -472,11 +472,11 @@ Al igual que con la consultora 1, el estudio teórico de la complejidad del algo
 
 En la figura 6.a se ve como el tiempo necesario para la resolución de la instancia de entrada depende directamente del tamaño de la misma. Se ve que presenta la forma de una recta, una función lineal. En la figura 6.b se repitió la idea de dividir a la función por el tamaño de entrada, buscando como resultado un gráfico de una recta horizontal, constante, que confirme la complejidad lineal de nuestro algoritmo. Desechando los casos pequeños, y analizando los tamaños mayores (que son los que nos interesan al estudiar la complejidad teórica de los algoritmos) vemos que tienden a una constante tal como se había predicho.
 
-A continuación, una vez confirmada la complejidad para los casos genéricos, se buscó encontrar los casos en los cuales el algoritmo mejoraba o empeoraba su eficiencia. Como en la primera parte, el BFS, no queda otra opción que recorrer todo el árbol, el énfasis se puso en el final, la reconstrucción del camino máximo para luego encontrar su medio. Si este camino fuera corto este proceso sería rápido, inversamente así para un camino más largo.
+A continuación, una vez confirmada la complejidad para los casos genéricos, se buscó encontrar los casos en los cuales el algoritmo mejoraba o empeoraba su eficiencia. Como en la primera parte, el BFS, no queda otra opción que recorrer todo el árbol, el énfasis se puso en el final, la reconstrucción del camino máximo para luego encontrar su medio. Si este camino fuera corto este proceso sería rápido, y tardaría más para un camino más largo.
 
-Se decidió generar mejores casos en los que el camino máximo del árbol fuera de tamaño mínimo (2), para esto se generaron grafos en los que un nodo estuviera conectado a todos los demás (de este se colgará el arbol al terminar el algoritmo) sin ninguna otra arista extra, para asegurarnos que este era el árbol devuelto por la consultora 1.
+POr esto, se decidió generar mejores casos en los que el camino máximo del árbol fuera de tamaño mínimo (2). Para esto se generaron grafos en los que un nodo estuviera conectado a todos los demás (de este se colgará el arbol al terminar el algoritmo) sin ninguna otra arista extra, para asegurarnos que este era el árbol devuelto por la consultora 1.
 
-Para los peores casos se debían generar grafos en los que el AGM resultante tuviera un camino de longitud n-1 (contando las aristas), esto se logra generando instancias en las que cada servidor tiene como vecinos al servidor inmediátamente anterior a éste, y al servidor inmediatamente posterior.
+Para los peores casos se debían generar grafos en los que el AGM resultante tuviera un camino de longitud $n-1$ (contando las aristas). Esto se logra generando instancias en las que cada servidor tiene como vecinos sólamente al servidor inmediátamente anterior a éste, y al servidor inmediatamente posterior.
 
 \begin{figure}[H] % Example image
     \begin{subfigure}[b]{0.45\textwidth}
@@ -500,11 +500,11 @@ En ambos gráficos de la figura 7 se puede apreciar claramente la forma lineal d
     \caption{Comparación de los tiempos de ejecución para la consultora 2}
 \end{figure}
 
-Ahora si, en la figura 8 se puede ver como los casos con un camino máximo de longitud 2 son resueltos por el algoritmo de forma más rápida que aquellos que tienen un camino máximo más largo, especialmente más rápida que los peores casos con un camino máximo que recorra todo el árbol.
+Ahora si, en la figura 8 se puede ver como los casos con un camino máximo de longitud 2 son resueltos por el algoritmo de forma más rápida que aquellos que tienen un camino máximo más largo (especialmente más rápida que los peores casos con un camino máximo que recorra todo el árbol). Cabe notar que a pesar de tener la misma cantidad de servidores, la disposición que tengan los enlaces nos da distintos tiempos de ejecución dando asi mejores y peores casos como hemos visto.
 
 \subsection{Conclusiones}
 
-Se puede concluir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y  $\mathcal{O} (n)$)  son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 5 y 8 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios es puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo distintas condiciones de las instancias de entrada. Sabemos entonces que las consultoras en cuestión presentaran tiempos de ejecución menores para grafos con una menor cantidad de aristas y cuyo AGM presente un camino máximo lo más corto posible.
+Se puede concluir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y  $\mathcal{O} (n)$)  son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 5 y 8 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios se puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo distintas condiciones de las instancias de entrada. Sabemos entonces que las consultoras en cuestión presentaran tiempos de ejecución menores para grafos con una menor cantidad de aristas y cuyo AGM presente un camino máximo lo más corto posible.
 
 
 \section{Problema 3}
