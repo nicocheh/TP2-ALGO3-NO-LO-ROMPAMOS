@@ -1,0 +1,683 @@
+\documentclass[A4paper,oneside,fleqn,11pt]{article}
+
+% This first part of the file is called the PREAMBLE. It includes
+% customizations and command definitions. The preamble is everything
+% between \documentclass and \begin{document}.
+
+%Cambiamos un poquito los márgenes%
+\addtolength{\oddsidemargin}{-1in}
+\addtolength{\evensidemargin}{-1in}
+\addtolength{\textwidth}{2in}
+\addtolength{\topmargin}{-1in}
+\addtolength{\textheight}{2in}
+
+
+
+\usepackage{mathtools}
+\usepackage{graphicx}              % to include figures
+\usepackage{amsmath}               % great math stuff
+\usepackage{amsmath,scalerel}
+\usepackage{amsfonts}              % for blackboard bold, etc
+\usepackage{amsthm}                % better theorem environments
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{multicol}
+\usepackage{tikz-cd}
+\usepackage{amsmath}
+\usepackage[linesnumbered,ruled]{algorithm2e}
+\usepackage{algpseudocode}
+\usetikzlibrary{calc}
+\usetikzlibrary{matrix}
+\usepackage{graphicx,wrapfig,lipsum}
+\usepackage{subcaption} %para poner varias imagenes en un figure
+\usepackage{graphicx} % Required for including pictures
+
+\usepackage{sidecap}%para poner la descripción de una imagen al lado de la imagen,no abajo ni arriba
+\usepackage{float} % Allows putting an [H] in \begin{figure} to specify the exact location of the figure
+\usepackage{wrapfig} % Allows in-line images such as the example fish picture
+\graphicspath{ {Grphs/} }
+
+
+\setcounter{tocdepth}{3}% to get subsubsections in toc
+
+\let\oldtocsection=\tocsection
+
+\let\oldtocsubsection=\tocsubsection
+
+\let\oldtocsubsubsection=\tocsubsubsection
+
+% various theorems, numbered by section
+
+\newtheorem{teo}{Teorema}[section]
+\newtheorem{lem}[teo]{Lema}
+\newtheorem{prop}[teo]{Proposición}
+\newtheorem{cor}[teo]{Corolario}
+\newtheorem{crit}[teo]{Criterio}
+\newtheorem{propi}[teo]{Propiedad}
+
+\theoremstyle{definition}
+\newtheorem{ejcio}[teo]{Ejercicio}
+\newtheorem{conj}[teo]{Conjetura}
+\newtheorem{obs}[teo]{Observación}
+\newtheorem{defn}[teo]{Definición}
+\newtheorem{ax}[teo]{Axioma}
+\newtheorem{ex}[teo]{Ejemplo}
+
+\newcommand{\bd}[1]{\mathbf{#1}}  % for bolding symbols
+\newcommand{\cl}[1]{\overline{#1}} 
+\newcommand{\CC}{\mathbb{C}}
+\newcommand{\RR}{\mathbb{R}}      % for Real numbers
+\newcommand{\ZZ}{\mathbb{Z}}      % for Integers
+\newcommand{\NN}{\mathbb{N}}
+\newcommand{\QQ}{\mathbb{Q}}
+\newcommand{\FF}{\mathbb{F}}
+\newcommand{\col}[1]{\left[\begin{matrix} #1 \end{matrix} \right]}
+\newcommand{\comb}[2]{\binom{#1^2 + #2^2}{#1+#2}}
+\newcommand{\eps}{\varepsilon}
+\renewcommand{\hom}{\mathrm{Hom}}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+\DeclareMathOperator{\id}{id}
+\DeclareMathOperator{\mcm}{mcm}
+\DeclareMathOperator{\mcd}{mcd}
+\DeclareMathOperator{\ord}{ord}
+\DeclareMathOperator{\im}{im}
+\DeclareMathOperator{\End}{End}
+\DeclareMathOperator{\Aut}{Aut}
+\DeclareMathOperator{\sg}{sg}
+\DeclareMathOperator{\cok}{cok}
+\DeclareMathOperator{\ext}{Ext}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\rank}{rk}
+\DeclareMathOperator{\gr}{gr}
+\DeclareMathOperator{\car}{char}
+\DeclareMathOperator{\Nil}{Nil}
+\DeclareMathOperator{\spec}{Spec}
+\DeclareMathOperator{\ev}{ev}
+\DeclareMathOperator{\ann}{Ann}
+\DeclareMathOperator{\tr}{Tr}
+\DeclareMathOperator*{\bigcdot}{\scalerel*{\cdot}{\bigodot}}
+\def\acts{\curvearrowright}
+\def\stca{\curvearrowleft}
+
+\setcounter{tocdepth}{10}
+\setcounter{secnumdepth}{10}
+
+\usepackage[utf8]{inputenc}
+\usepackage{fancyhdr}
+
+
+\begin{document}
+
+%----------------------------------------------------------------------------------------
+%	TITLE PAGE
+%----------------------------------------------------------------------------------------
+
+\begin{titlepage}
+
+\center % Center everything on the page
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\textsc{\LARGE Universidad de Buenos Aires}\\[1.5cm] % Name of your university/college
+\textsc{\Large Facultad de Ciencias Exactas y Naturales}\\[0.5cm] % Major heading such as course name
+\textsc{\large Departamento de Computación}\\[0.5cm] % Minor heading such as course title
+\textsc{\large Algoritmos y Estructuras de Datos III}\\[0.5cm] % Minor heading such as course title
+
+\HRule \\[0.8cm]
+{ \huge \bfseries Trabajo Práctico 2}\\[0.4cm] % Title of your document
+\HRule \\[1.5cm]
+
+\begin{minipage}{0.8\textwidth}
+\center
+%\begin{flushleft} 
+\Large
+\emph{Autores:}
+
+
+{Nicolás Chehebar, mail: \textit{nicocheh@hotmail.com}, LU: 308/16 
+
+Matías Duran, mail: \textit{mato\_fede@live.com.ar}, LU: 400/16 
+
+Lucas Somacal, mail: \textit{lsomacal@gmail.com}, LU: 249/16} % Your name
+%\end{flushleft}
+~
+\end{minipage}\\[4cm]
+
+%\includegraphics{Logo}\\[1cm] % Include a department/university logo - this will require the graphicx package
+
+\vfill % Fill the rest of the page with whitespace
+
+\end{titlepage}
+
+%----------------------------------------------------------------------------------------
+%	TABLE OF CONTENTS
+%----------------------------------------------------------------------------------------
+
+
+ %\chead{Algo III, TP2, Chehebar, Duran, Somacal}
+ 
+%\title{Algoritmos y Estructuras de Datos III, TP2}
+%\author{Nicolás Chehebar, Matías Duran, Lucas Somacal}
+%\date{}
+
+
+
+\pagenumbering{roman}
+\pagenumbering{arabic}
+%\maketitle
+\tableofcontents
+\clearpage
+
+\section{Problema 1}
+\subsection{El Problema}
+
+\subsubsection{Descripcion}
+Planteado de otra forma, el problema a resolver consiste en una situación en la que tenemos $n$ trabajos $t_{1},t_{2},...,t_{n}$ y dada cualquier división de los trabajos en dos secuencias $A=(t_{a_{1}},t_{a_{2}},..., t_{a_{|A|}})$ y $B=(t_{b_{1}}, t_{b_{2}},...,t_{b_{|B|}})$  con $a_{i}<a_{j} \land b_{i}<b_{j} si i<j$ (cada secuencia representa los trabajos que realizo una máquina) tiene asociado un costo; donde este viene dado por la suma del costo de $A$ y el de $B$. El costo de $A$ es  $\sum\limits_{i=1}\limits^{|A|} costo (t_{a_{i}},t_{a_{i-1}})$  donde $costo$ es una función que toma valores en $\NN_{0}$ y $costo(t_{i},t_{j})$ esta definidio si $i>j$ con $i \in [1,2,..,n] \land j \in [0,1,..,n-1]$ y represnta el costo de poner el trabajo i sobre el j (el costo de poner sobre el trabajo $t_{0}$ es el de ponerlo sobre la máquina vacía y $a_{0}=0$). El costo de $B$ se calcula análogamente. 
+
+El problema pide dados los trabajos y la funcion de costo, dar $A$ o $B$ que minimice el costo y decir cuanto es este costo (basta dar uno de los dos ya que el otro se deduce por ser el complemento -en el conjunto de trabajos-)
+\subsubsection{Ejemplos}
+\begin{itemize}
+\item En el caso en que la entrada es $\begin{matrix}
+  4 &  &  &  \\
+  2 &  &  &  \\
+  300 & 3 &  &  \\
+  300 & 3 & 3 &  \\
+  300 & 3 & 3 & 3 
+\end{matrix}$ tenemos 4 trabajos que sacando el primero son excesivamente caros de poner por primera vez en una maquina, luego si ponemos todos en la misma, el costo sera $2+3+3+3=11$ y una máquina tendrá todos los trabajos (si todos no estan en la misma, en algun momento pagamos $300$ y el costo ya seria mayor a $11$).
+\item En el caso en que la entrada es $\begin{matrix}
+  4 &  &  &  \\
+  2 &  &  &  \\
+  4 & 1 &  &  \\
+  300 & 3 & 300 &  \\
+  300 & 300 & 300 & 3 
+\end{matrix}$ tenemos 4 trabajos, ponemos el primero en una maquina y nos da costo $2$, si bien en el proximo paso lo mejor es poner el nuevo trabajo encima (si hicieramos un algoritmo goloso), en ese caso el siguiente trabajo costara $300$ haciendo el total $>299$, y si no hibieramos puesto el segundo encima, si bien costaba mas en ese paso, reducía el costo del próximo, dando un costo total de $12$ estando los trabajos 1, 3 y 4 en una maquina.
+\end{itemize}
+
+
+\subsection{El Algoritmo}
+
+\subsubsection{La función de dinámica}
+Para resolver el problema, utilizaremos programación dinámica. La idea de esto se basa en que la solución de nuestro problema es calculable en base a la solucion de subproblemas (utilizamos optimalidad de subproblemas). Definimos así $f(q,h)$ como la función que asigna el mínimo costo posible para llegar al trabajo $q$-ésimo hecho (habiendo hecho de la 1 hasta la q inclusive) con el trabajo $h$ como el último que se hizo en algunas de las máquinas. Tomamos como dominio de la $f$ a los $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$. donde $h=0$ significa que hay una maquina vacía. Es clave notar que siempre que luego de que realizamos el trabajo $q$ en una de las máquinas estará en el tope dicho trabajo, por ende basta definir que hay en la otra. Definimos a continuación la función para los valores en el dominio ya mencionado:
+
+\begin{equation}
+    f(q,h) =
+    \begin{cases*}
+       costo(q,0) & $si$  $q=1$  $\land$  $h=0 $\\
+       f(q-1,h)+costo(q,q-1) & $si  h < q-1 $\\
+       \displaystyle \min_{0 \leq h \leq q-2} {f(q-1,h)+precios[q][h]}       & caso contrario (h=q-1)
+    \end{cases*}
+  \end{equation}
+
+Esta función hace efectivamente lo que queremos:
+\begin{itemize}
+
+ \item En el primer caso lo hace pues si $q=1$ esto implica $h=0$ por restricciones de dominio y es la minima cantidad dado que coloqué solo el primer trabajo, pues si o si el costo será el de colocar la primera sobre la maquina vacía, por ende será el mínimo.
+ \item En el segundo caso también lo hace pues si esta un trabajo $h<q-1$ en una máquina es porque el ultimo trabajo colocado (el q) se colocó en la otra, por ende previo a finalizar el trabajo $q$, estaba en una máquina el $q-1$ y en otra el $h$. Más aún sabemos que el q lo colocamos sobre el $q-1$. Supongamos $f(q,h)$ el costo mínimo dado el trabajo $q$ hecho y el trabajo $h$ en alguna impresora (analogo para $f(q-1,h)$), si es $f(q,h)<f(q-1,h)+costo(q,q-1)$ luego es absurdo pues $f(q-1,h)$ no es el minimo, ya que hago la secuencia que da el mínimo en $q$ trabajos hechos con $h$ en una máquina sin el ultimo paso (resto su costo, o sea el de poner a $q$ sobre $q-1$) y me queda que tengo una forma de tener $q-1$ trabajos hechos con $h$ en una maquina con costo $f(q,h)-costo(q,q-1)<f(q-1,h)$ lo que es absurdo pues $f(q-1,h)$ era el minimo.
+ \item En el tercer caso también sucede pues si está el trabajo $q-1$ en una máquina con la impresión $q$ ya hecha, es porque la impresión $q$ se colocó sobre alguna impresión $h$ con $0 \leq h \leq q-2$. Dada dicho trabajo, de forma totalmente análoga al caso de arriba, debe ser el mínimo buscado con $q$ trabajos hechos y el $q-1$ en una máquina $f(q,q-1)= f(q-1,h)+costo(q,h)$. Luego como no se cual trabajo de todos pudo haber sido, me quedo con el mínimo moviendo los h en el rango dado.
+  \end{itemize}
+Así, definimos una función que resuelve el problema pedido si hayamos el $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ pues es el mínimo costo de realizar hasta el trabajo $t$ (o sea todos) con el trabajo $h$ en alguna máquina (me fijo todos los escenarios posibles como puede terminar la otra máquina, o sea todos los posibles $h$). 
+
+Así, podemos implementar la $f$ dada, donde podemos ir recordando los valores que toma $f$ y evitar calcularlos varias veces. Más aún podríamos mantener una lista (ordenada) de cuales son los elementos que hay en alguna máquina y cada vez que agregamos un trabajo, checkeamos si lo agregamos sobre el ultimo de la lista y en ese caso lo incluimos al final de esta (sino es porque fue a la otra máquina).
+
+Lo que sucede es que tenemos varios subproblemas y en este caso siempre resolvemos todos, por lo que no parece tener una clara ventaja hacerlo top-down. Más aún, hacerlo bottom-up nos permitirá solo guardarnos los subproblemas relativos a tener hecho exactamente hasta el anterior trabajo (con $q-1$ y para todos los $h$, los menores no los utilizo en el calculo de $f(q,h)$), o sea nos reduce la complejidad espacial! Ya que incialmente debíamos guardar el valor de $f$ para todo $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$ lo que era $\mathcal{O}(n^2)$, y de esta forma solamente guardamos los valores para $q-1$ lo que es $\mathcal{O}(n)$.
+
+ Veamos todo esto en un pseudocódigo:
+\subsubsection{El Pseudocódigo}
+
+Cabe aclarar que en el pseudcódigo (como también en la implementación) numeramos los trabajos desde 0 a exceión de en $costos$ (que es una matriz) en el segundo indice, los trabajos estan numerados desde 1 (ya que el 0 se reserva para el costo de poner sobre la máquina vacía).
+
+\begin{algorithm}[H]
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \underline{Dinámica} $(trabajos,costo)$\;
+    \Input{$trabajos \in \NN_{0}$; $costo \in \NN_{0}^{trabajos \times trabajos}$}
+    \Output{$costo \in \NN_{0}$,$lista$ vector enteros}
+    
+    Inicializo en $0$ $actualcosto$ y $anteriorcosto$ vectores de enteros (de tamaño $trabajos$);
+    
+    Inicializo en vectores vacíos $actuallista$ y $anteriorlista$ vectores de vectores de enteros (de tamaño $trabajos$);
+    
+    \For{q $\in [0,1,..,trabajos)$}{
+    	\For{h $\in [0,1,..,q)$}{
+    	
+    		$actualcosto[h]=anteriorcosto[h]+costo[q][q]$;
+    		
+    		$actuallista[h]=anteriorlista[h]$;
+    		
+    		\If{Estaba $q-1$ en $anteriorlista[h]$}
+        	{
+        		Agrego $q$ a $anteriorlista[h]$; 
+        	}
+        	
+    		$actualcosto[q]=min(actualcosto[q],anteriorcosto[h]+costos[q][h])$;
+    		
+    		Recuerdo en $elegido$ el $h$ que consiguió el minimo;
+   		 }
+   		 
+    $actuallista[q]=anteriorlista[elegido]$;
+    
+    \If{NO Estaba $q-1$ en $anteriorlista[elegido]$}
+        	{
+        		Agrego $q$ a $anteriorlista[elegido]$; 
+        	}
+    anteriorcosto=actualcosto;
+    
+	anteriorlista=actuallista;
+    }
+    
+     $ costo$ = minimo de $actualcosto$ (se alcanza en $actualcosto[posicion]$);
+     
+     $lista = actuallista[posicion]$;
+     
+      return $costo$, $lista$;    
+      
+      \caption{Devuelve el mínimo costo de entre todas las formas posibles de realizar todas las impresiones}   
+\end{algorithm}
+
+En el pseudocódigo basicamente lo que hacemos es aplicar la $f$ pero en orden, es importante esto ya que hay que tener cuidado en el orden en que resolvemos las dependencias (es porque estamos haciendo bottom-up). Es claro que cada fila, usa la fila anterior, o sea para calcular $f(q,h)$ para todo $h$ uso todos los valores de $f(q-1,h)$ para todo $h$. Por esto es que ambos for se anidan de dicha manera. Al principio del for actualizamos el costo segun nos dice la $f$ y la lista de los trabajos que hay en alguna máquina se modifica solo si era el de la máquina que tenía a $q-1$ ya que es a la que le agrego el trabajo $q$. Además, como voy a recorrer todos los $h$, voy actualizando el $actualcosto[q]$ si tengo un menor $anteriorcosto[h]+costos[q][h]$; una vez que iteré en todos los h calculé el minimo que es $f(q,q-1)$. Ahí salimos del primer for y como hacía con $actuallista[h]$ actualizo si corresponde la $actuallista[q]$. Finalmente, antes de pasar a la siguiente iteración pongo en $anteriorcosto$ el $actualcosto$ y en $ anteriorlista$ la $actuallista$, ya que en la proxima iteración los actuales serán anteriores y sobre actual pisaré y guardaré nuevos resultados. Finalmente, se devuelve el mínimo buscado y su lista asociada ( lo que nos pedían era $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ que en nuestro caso es el minimo de $actualcosto$.
+
+
+
+\subsection{Complejidad}
+
+Cabe aclarar que para el análisis de complejidad tomaremos $n$ como la cantidad de trabajos. Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde$ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son $n^2$ en total y le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad sera $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
+
+Más aún esto se ratifica si miramos el pseudocódigo ya que realizamos todas operaciones que son $\mathcal{O}(n)$ u $\mathcal{O}(n)$ fuera del ciclo (inicialización o recorrido de vectores de tamaño a lo sumo $n$). Veamos que sucede dentro del ciclo: tenemos dos ciclos anidados que se ejecuta cada uno  a lo sumo $n$ veces, por ende todo se ejecuta a lo sumo $n^2$ veces y todo lo de adentro son operaciones $\mathcal{O}(1)$ (checkear si $q-1$ esta en $anteriorlista[h]$ es $\mathcal{O}(1)$ porque inserto siempre ordenado y si es un elemento, es el ultimo; lo mismo vale para checkear si $q-1$ esta en $anteriorlista[elegido]$).Luego salimos del segundo for (el anidado)y cabe aclarar que copiar el vector $actualcosto$ y $actuallista$ no es $\mathcal{O}(1)$ sino $\mathcal{O}(n)$, pero esta solo en uno de los ciclos, por lo que se repite $n$ veces y aporta una complejidad de $n* \mathcal{O}(n)= \mathcal{O}(n^2)$. Por ende en el ciclo tenemos $n^2 *\mathcal{O}(1)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$ y sumado a lo que esta fuera del ciclo nos da $\mathcal{O}(n)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$
+
+\subsection{Experimentación}
+
+
+\subsubsection{Contexto}
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). 
+El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividìa el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+\subsubsection{Experimentos}
+
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{r.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de trabajos para instancias aleatorias.}
+\end{wrapfigure}
+Para empezar a experimentar, se corrió el programa con una serie de $2000$ casos generados aleatoriamente donde aleatoriamente fue con una cantidad de trabajos aleatoria entre $1$ y $10^3$  con una distribución uniforme 
+\footnote{ se utilizó la función rand() de librerías de C++ en el rango correspondiente, para mas detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }
+en dicho intervalo. Para la matriz de costos, también se tomo para cada celda un costo aleatorio generado de la misma forma con un costo entre $1$ y $10^6$. A continuación graficamos estas instancias:
+
+
+
+Como podemos ver en la Figura 1, pareciera haber un gráfico semejante a una parábola lo que ratificaría la relación cuadrática que propusimos entre la cantidad de trabajos y la cantidad de operaciones realizadas. Sin embargo no nos da del todo información para aseverar eso este gráfico,ya que podría tratarse de alguna función con crecimiento similar. Es por esto que se realizó un gráfico de la relación entre tiempo de ejecución y $trabajos^2$ y si la relación es efectivamente cuadrática este gráfico debería ser constante. Como se puede ver en el gráfico de la figura 2 efectivamente se trata de una constante, lo que verifica nuestra hipótesis y complejidad teórica de la relación cuadrática de dependencia entre la cantidad de operaciones y de trabajos. Podemos observar que no pareciera haber practicamente dispersión, ni mejores ni peores casos, analizaremos esto luego.
+
+\break
+
+\begin{wrapfigure}[10]{L}{0.25\textwidth}
+	%\centering
+	\includegraphics[width=0.25\textwidth]{Escuad.png}
+	\caption{ Gráfico de segundos de ejecución en función de cantidad de trabajos al cuadrado para instancias aleatorias.}
+\end{wrapfigure}
+
+Primero, debemos notar que segun el análisis realizado, en el tiempo de ejecución solo influye la cantidad de trabajos, más alla del costo que pueda tener cada trabajo ya que en lo unico que influye es en la suma (y como trabajamos con enteros acotados, no influye considerablemente en el tiempo de ejecución la suma). Por esto se ejecutaron las mismas $2000$ instancias que se ejecutaron sumando una constante $k$ que se movio entre $10^i$ con $i=1,2,3,4,5,6,7,8,9$ a todo costo y no cambió considerablemente el tiempo de ejecución (notar que no cambia el resultado de cuales trabajos quedan en una máquina respecto de la ejecución respecto de no haber sumado la constante) en todos los $i$ como vemos a continuación en los casos $i=4$ e $i=8$ en las figuras 3.a, 3.b y 3.c .
+
+\vspace{8mm}
+
+\begin{figure}[H]
+	\captionsetup[subfigure]{position=b}
+	\centering
+	
+	\subcaptionbox{sumando $k=10^4$ en costos}{\includegraphics[width=.3\linewidth]{r4.png}}
+	\subcaptionbox{sumando $k=10^8$ en costos}	{\includegraphics[width=.3\linewidth]{r8.png}}
+	\subcaptionbox{costos sin modificar (en azul), sumando $k=10^4$ (amarillo) y sumando $k=10^8$ (rojo)}{\includegraphics[width=.3\linewidth]{r48.png}}
+	\caption{Gráfico de segundos de ejecución en función de cantidad de trabajos para instancias aleatorias con distintos costos}
+\end{figure}
+
+Podemos ver que en todos los casos la dependencia sigue siendo, en rasgos generales la misma, cuadrática (se verifico haciendo el gráfico de $segundos / trabajos^2$ para cada i, los excluimos por una cuestión de espacio, pero todos resultaron constantes). Más aún al comparar instancias de diversos $i$ podemos ver que tienen similar tiempo de ejecución lo que nos indica que (sumado a que tomamos costos aleatorios) no hay influencia de los costos en el tiempo de ejecución, lo que tiene sentido por lo que hace el algoritmo y la complejidad teorica calculada
+
+
+Como decidimos implementar el algortimo de forma Bottom-Up siempre calculamos todos los subproblemas, esto es una ventaja en el sentido de que siempre todas las instancias de igual cantidad de trabajos tardan lo mismo, como se vio a lo largo de esta experimentacion, por lo que no hay mejores ni peores casos. Al ver la implementación y el pseudocódigo podemos ver que lo que realizamos depende exclusivamente de la cantidad de trabajos total (los costos solo cambian el resultado de cada cuenta, pero no la cantidad de operaciones ni su orden). También tomar esta decisión de implementar Bottom-Up nos permitió ahorrar en memoria ya que no requeríamos memorizar todos los subproblemas, sino que solo utilizabamos la información del subproblema anterior. La única desventaja es que a veces respecto de Top-Down, se calculan todos los subproblemas y no solo los necesarios. Pero si nos detenemos a ver la f que definimos al explicar el algoritmo (como ya también explicamos antes) siempre se van a calcular todos los subprobemas pues son todos necesarios, por ende esa tampoco es una ventaja del Top-Down en este caso. Todo esto se pudo ver experimentalmente ya que todas las instancias tuvieron un tiempo de ejecución muy similar y la dispersión fue practicamente nula.
+
+\subsection{Conclusiones}
+
+Concluimos entonces que la complejidad es de $\mathcal{O}(n^2)$ como se vio teóricamente y además se pudo verificar de forma experimental. Como se analizó al implementar bottom-up se resolvían todos los subproblemas siempre, por lo que (lo que también se vió experimentalmente) no había diferencia entre casos, no había ni peores ni mejores casos, todas las instancias de igual cantidad de trabajos tomaban, practicamente, el mismo tiempo de ejecución. Más aún se vió también experimentalmente que (como se esperaba y se deducía del algoritmo) no había influencia alguna de los valores de los costos en el tiempo de ejecución.
+
+\section{Problema 2}
+\subsection{El Problema}
+
+\subsubsection{Descripcion}
+Si nos abstraemos de los detalles del problema, este nos describe una situación en la cual tenemos un grafo $G$ (no orientado) conexo con pesos no negativos. Lo que nos piden en la parte 1 del problema es encontrar un conjunto de aristas $E' \subseteq X(G)$ del grafo que cumpla que la suma de sus costos sea la mínima posible (minimizar $\sum_{e \in E'} {peso(e)}$ y que el subgrafo $H$ con nodos $V(G)$ y aristas $E'$ sea conexo. En la parte dos
+del problema nos piden, dado un $E'$ que cumple lo antes descripto, elegir un nodo $v \in V(G)$ tal que si consideramos el subgrafo $H$ sin pesos, minimice la máxima distancia de $v$ a otro nodo (minimice $\max_{w\in V(H)}{distancia(v,w)}$).
+
+\subsubsection{Ejemplos}
+\begin{itemize}
+
+\item Si consideramos $K_{n}$  (el grafo completo de n vertices) con pesos constantes, todos 1 por ejemplo, la solución será cualquier conjunto de aristas que conecte todos los vertices (son al menos $n-1$ aristas) y con exactamente $n-1$ aristas se alcanza el minimo (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso). Así, la solución tendra peso $(n-1)*1=n-1$ y podemos elegir tales aristas que cumplan que el subgrafo sea conexo (tomo la arista $(i,i+1)$ con $i=1,2,...,n-1$ donde los nodos estan numerados $1,...,n$). Esta sería entonces una solución posible
+\item Si consideramos $C_{n}$ (el ciclo simple de n vertices) con pesos todos distintos positivos, la solución debe tener la minima cantidad de aristas posibles (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso) y para que sea conexo estas son $n-1$. Luego basta excluir solo una arista y como quiero minimizar el peso y saque cual saque queda conexo, saco la de mayor peso y ya (es unica la solución en este caso, pues son todos distintos y la  arista de peso maximo es única). Las aristas buscadas serán todas menos la excluida y el peso, la suma de sus pesos.
+
+\end{itemize}
+
+
+\subsection{Consultora 1}
+
+\subsubsection{El algoritmo}
+Si nos detenemos a evaluar lo que pide la primer parte del problema, notamos que la solución debe permitir que sea conexo el grafo (debe tener $n-1$ aristas al menos) y debe minimizar la cantidad de aristas (pues cada arista es de peso positivo, si no tuviese la minima cantidad de aristas saco una y disminute el peso), luego debe tener exactamente $n-1$ aristas. Y además debe ser conexo!, luego se trata de un arbol, y como debe tener como nodos a $V(G)$ es un arbol generador. Pero buscamos la solución de peso minimo (o una de ellas), por ende la solución es un AGM (arbol generador minimo). 
+
+Para esto utilizamos el algoritmo de Prim (no pondremos su pseudocódigo por ser un algoritmo ya visto en clase y muy conocido, igual se puede ver el pseudocódigo en el problema 3, es cuestión de cambiarle las unicas dos modificaciones que estan claramente marcadas y comentadas). Tomamos la opcion de Prim en la que se utiliza un vector para implementar la cola de prioridad que tiene las distancias al AGM de los nodos no incluidos. Un breve resumen y descripcion de lo que hace es que va construyendo un AGM, agregando un nodo (y una arista) en cada iteración. Itera $n$ veces donde en cada una toma al nodo mas cercano que no este en el AGM (recorre linealmente todos los nodos de $G$). El nodo mas cercano es aquel tal que la arista necesaria para incluirlo es la menos pesada de todas las que agreguen a algun nodo. Esto se hace recorriendo un vector en el que se guardan dos valores para cada nodo, si ya está incluido en el AGM, y el vecino suyo más cercano que esté incluido en el AGM (que es como guardar su distancia al AGM porque chequear la distancia entre dos vecinos es $\mathcal{O} (1)$ con nuestra representación). Una vez que se sabe qué nodo agregar al AGM, se actualizan todos sus vecinos. Donde al actualizar lo que se hace es chequear todos sus vecinos en su lista de adyacencia, y si él está más cerca que el nodo que ya teníamos registrado lo marcamos como el nuevo nodo más cercano.
+
+Utilizamos como representación del grafo de entrada una matriz de adyacencia, para justamente poder acceder al peso de la arista que une dos nodos en particular en $\mathcal{O} (1)$. A la vez, como en cada iteración se necesita revisar todos los vecinos de un nodo particular que agregamos, para facilitar esto nos tomamos el tiempo al principio de construir las listas de adyacencia. Por último, para facilitar la escritura del output de la forma pedida, una vez que tenemos el AGM construído lo devolvemos en forma de matriz de incidencia, sabemos que esto no empeora la complejidad porque como mucho un arbol tiene n-1 aristas, entonces armar esta matriz cuesta $n^2$. Es importante aclarar que la consultora 1 devuelve el AGM en forma de listas de adyacencia, para que la consultora 2 pueda cumplir facilmente con la complejidad pedida. Todas estas representaciones se construyen en $n^2$ por lo que no cambian la complejidad teórica del algoritmo.
+
+
+\subsubsection{Complejidad}
+
+Como bien sabemos, la complejidad del algoritmo de Prim puede ser o bien $\mathcal{O} (n^2)$ si se utiliza un vector para implementar la cola de prioridad que tiene las distancias al AGM de los nodos no incluidos (tomar el minimo es $\mathcal{O} (n)$, pero actualizar una distancia es $\mathcal{O} (1)$) o bien $\mathcal{O} ((m+n) log(n))$ si se utiliza un heap (tomar el minimo y actualizar son ambos $\mathcal{O} (log(n))$. Ambas cumplen la complejidad pedida, pero en nuestro caso lo implementamos de la primera forma, por lo que la complejidad es $\mathcal{O} (n^2)$ que cumple lo pedido.
+
+\subsection{Consultora 2}
+
+
+\subsubsection{El algoritmo}
+El algoritmo en si es muy simple, la idea es encontrar el camino máximo del arbol que nos devuelve el algoritmo de la consultora 1 y tomar el nodo que está en la mitad del camino (o alguno de los dos si tiene una cantidad par de nodos el camino). Y para tomar el camino mas largo, lanzamos BFS desde un nodo cualquiera $v$ para medir los caminos minimos (notar que los caminos son unicos, pues es un arbol) a todos los demas nodos (BFS es aplicable pues todas las aristas tienen el mismo peso en este caso) y sea $w$ el que esta mas lejos. Luego lanzamos BFS desde $w$ y sea $z$ el que este a mayor distancia de $w$. Luego el unico camino entre $z$ y $w$ (unico pues es un arbol) es el camino de máxima longitud que buscamos.
+
+Lo que es quizás mas complejo es entender por qué efectivamente esto funciona. Lo que nos piden es dado el arbol que devuelve la consultora 1, encontrar un nodo tal que si lo elegimos como raiz, la altura del arbol sea minima (i.e, minimizar la máxima de las distancias). Veamos primero que esta distancia tiene que ser $\geq x/2$ donde $x = longitud del camino simple maximo$. Supongamos que no, luego es $<x/2$ y por ende el camino entre dos nodos siempre sera $<x$ ya que un camino posible entre dos nodos $a y b$ (no necesariamente simple, por ende de mayor longitud que el simple) es ir desde $a$ hasta el nodo que elegimos como raíz y luego ir desde la raiz al $b$, como ambos caminos son de longitud $<x/2$ (es ir desde un nodo a la raíz y el arbol tiene altura $<x/2$), se deduce que el camino de unir ambos tiene longitud $<x$. Luego, finalmente todo camino entre un par de nodos tiene longitud $<x$, luego $x$ no era camino simple de longitud maxima (notar que el camino entre dos nodos es unico), pues todo camino simple tiene longitud menor. Hemos visto que la distancia debe ser $\geq x/2$, por ende demostramos que encontrar el camino maximo y tomar como raíz un nodo de la mitad del camino, minimiza la altura.
+
+Falta ver entonces que usar dos veces BFS como dijimos nos da efectivamente los dos nodos que dan el camino maximo. Sean $a,b$ los dos nodos que son extremos del camino máximo. Y sea $v$ el nodo desde el que inicialmente lanzamos BFS y $w$ sobre el segundo que lanzamos BFS (el mas lejano de $v$). Si quitamos $v$ del arbol, este se nos divide en $c$ componentes conexas. Si $a $y$ b$ pertenecen a distintas componentes conexas, luego el camino (es un arbol, luego es unico) que los une pasa por $v$. Supongamos sin perdida de generalidad que $w$ no esta en la misma componente conexa que $a$ (si no lo tomamos respecto a $b$, siempre hay uno con el que no esta en la misma componente conexa, pues no puede estar en dos componentes conexas a la vez). Luego, si consideramos el camino desde $w$ a $v$ es de longitud mayor (o igual quizas) que el camino de $a$ a $v$ (pues $w$ es el mas lejano de $v$). Luego el camino de $w$ a $v$ unido con el de $v$ a $b$ tiene longitud mayor (o igual), lo que nos dice que necesariamente uno de esos nodos debe ser $w$. Luego tomamos el más lejano a $w$ lanzando nuevamente BFS y obtenemos el camino maximo. Ya lo probamos si $a$ y $b$ estan en diferentes componentes conexas, veamos que sucede si $a$ y $b$ quedan en la misma componente conexa, pero en ese caso, repetimos el mismo argumento en la componente conexa desde el único elemento que estaba conectado con $v$ como la raíz, luego $w$ sigue siendo el más lejano a este (si alguno $w'$ fuese el nuevo mas lejano, estaría mas lejos que $w$ de $v$ pues solo sumo uno mas en ambas distancias para llegar desde la nueva raíz a $v$ y debo pasar si o si por ella pues es lo que une a la componente conexa con $v$, absurdo). Iteramos así y a cada paso reducimos en uno la altura del arbol que nos va quedando, si en algun momento $a$ y $b$ quedan en componentes conexas distintas, ya esta por lo que porbamos antes, si no repetimos el argumento, hasta que en un momento (cuando la altura del arbol sea 2) al sacar un nodo nos quedan componentes conexas triviales y forzadamente $a$ y $b$ deben estar en componentes conexas distintas y vale lo que dijimos.
+
+Luego hemos probado que hacer BFS dos veces de esta forma nos da el camino simple máximo, en realidad nos da sus extremos, pero como el camino es unico, si el BFS además nos devuelve un vector en el que se aclara la distancia de cada nodo al nodo inicial del BFS, se puede reconstruir el camino máximo de la siguiente forma: Empezando por el nodo más lejano (el otro extremo que devuelve el BFS) se recorren todos sus vecinos y se agarra uno cuya distancia al original sea exactamente 1 menos que el actual(sabemos que existe porque de alguna forma se llego a este). Se repite este proceso tantas veces como nodos hay en el camino máximo, y como siempre la distancia al nodo original disminuye en 1, se llega al nodo con distancia cero, es decir el otro extremo del camino máximo. Como estamos en un arbol, sabemos que chequear cada vez todos los vecinos no trae problemas, porque aunque este método sea $\mathcal{O} (n+m)$ en un árbol $m=n-1$ y las complejidades no cambian. Hemos probado ademas que un nodo de la mitad del camino simple máximo realiza el mínimo buscado (probamos que ninguna otra distancia menor funciona, por ende este es el mínimo). Luego, demostramos que nuestro algoritmo es correcto y hace lo que efectivamente queremos
+
+\subsubsection{Complejidad}
+
+Ejecutamos dos veces BFS, que como bien sabemos es $\mathcal{O} (n+m)$ (ejecutarlo dos veces lo sigue siendo), pero como estamos en un arbol, $m=n-1$ luego $\mathcal{O} (n+m) =\mathcal{O} (n+n-1)=\mathcal{O} (n)$. Luego, una vez que tenemos los extremos del camino máximo, recorremos el grafo buscando las aristas que nos llevan entre ambos extremos, que lo hacemos en $\mathcal{O} (n)$. Nuevamente aclaramos que lo que se hace es empezar por un extremo del camino (el nodo más lejano que encontró la segunda llamada a BFS) y viendo todos sus vecinos se agarra alguno cuya distancia al otro extremo sea exactamente 1 menos. Esto se repite hasta llegar al nodo de distancia cero y llegado este punto recorrimos el camino máximo, guardando todos los nodos en un vector. Esto se puede realizar en $\mathcal{O} (n)$ porque como mucho se pasa por todos los nodos y se chequea todas las aristas, pero en un árbol $m=n-1$ y la complejidad queda como se dijo. Finalmente tomamos el nodo de la mitad de la lista de nodos que nos dio este recorrido. Como solo hicimos tres cosas que son $\mathcal{O} (n)$, la complejidad total es esa y cumple lo pedido.
+
+\subsection{Experimentación}
+
+\subsubsection{Generación de instancias}
+Para llevar a cabo la experimentación en primer lugar se generaron instancias, con tamaños entre $1<=n<=100$ y para cada tuno de estos tamaños, se construyeron $100$ casos. Cada caso tiene como mínimo $n-1$ aristas para que el grafo sea conexo, pero a esto se agregaban una cantidad de aristas que se tomaban de forma aleatoria entre $0$ y $n*(n-1)/2 - (n-1)$  (o sea que el grafo podría ser un arbol -minima cantidad de aristas-, $K_{n}$ -máxima cantidad de aristas- o cualquier grafo con una cantidad de aristas intermedia). Se tuvo cuidado a la hora de generar los grafos para asegurarse no solo la correctitud de las instancias de prueba, si no además su variedad, evitando casos como todos grafos conexos pero en los que siempre hay un nodo conectado a todos los otros.
+
+La forma de generarlos fue ir agregando los nodos uno a uno, y al agregar al nodo $i$, siempre incluír una arista $(i,t)$ con $1<=t<i$ para asegurar que el grafo hasta ahora construido sea conexo.
+
+A los pesos de las aristas se les dió un rango amplio de valores posibles, desde $0$ hasta $n^2$ para que puedan darse todas las opciones posibles (una arista que pese más que todas las otras, todas aristas de distinto peso, etc. -aunque no necesariamente equiprobablemente-).
+
+Se tuvo cuidado también de no generar multigrafos: en la generación de cada caso se construyó una matriz de adyacencia a la que se agregaban aristas nuevas si y solamente si sus extremos no estaban ya conectados en la matriz de adyacencia.
+
+Cada vez que se tomaron numeros aleatorios en la generación de instancias se utilizó una distribución uniforme 
+\footnote{ Se utilizó la función rand() de librerías de C++ en el rango correspondiente, para mas detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }.
+
+
+\subsubsection{Consultora 1}
+
+Al correr las instancias generadas se esparaban ver resultados que reforzaran las complejidades calculadas teóricamente. Se esperaba que se viera un tiempo de ejecución dependiente de la cantidad de servidores del grafo de entrada, con una relación de forma polinomial, más específicamente de $n^2$ ($n$ es la cantidad de servidores). Estos son los resultados obtenidos. 
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/r1}
+        \caption[center]{tiempo según n}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/complejidad1}
+        \caption{tiempo dividido $n^2$}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Tiempo de ejecución de la consultora 1 para instancias aleatorias}
+\end{figure}
+
+En la figura 4.a se puede observar un crecimiento que se adecúa bastante bien a la complejidad cuadrática esperada. Incluso más, en la figura 4.b se graficó el tiempo de ejecución dividido la cantidad de servidores al cuadrado, esperando que, como la complejidad era cuadrática, se viera en el gráfico resultante una constante. Vemos que exceptuando los casos con un tamaño muy chico, en el que el termino constante de la complejidad toma más importancia (ya que la división por pequeños valores de n no afecta mucho), todos los casos con un tamaño mayor a 20 se ubican en una recta horizontal.
+
+Por otro lado, para entender los contextos de uso en los que este algoritmo mostraría un buen desempeño se buscaron peores y mejores casos. Se pensó que la cantidad de aristas, si bien están acotadas en la complejidad teórica, son relevantes para el desempeño empírico de nuestro algoritmo. Como hay que recorrer todas las aristas para ir encontrando los nodos más cercanos al AGM, el peor caso sería un grafo completo, en el que hay que recorrer muchas aristas. En cambio  en el grafo que se chequean pocas aristas sería un mejor caso. Se generaron entonces instancias  de la forma antes detallada, pero fijando la cantidad de aristas totales a $n-1$ y $n*(n-1)/2$ para el mejor y peor caso respectivamente (la cantidad de aristas agregadas a las que aseguran conexión son $0$ y $n*(n-1)/2 - (n-1)$ respectivamente).
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/m1}
+        \caption[center]{mejor caso}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/p1}
+        \caption{peor caso}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Tiempo de ejecución de la consultora 1 para el mejor y el peor caso}
+\end{figure}
+
+Se puede observar en las figuras 5.a y 5.b como, si bien se mantiene a grandes rasgos la dependencia de la cantidad de servidores ya confirmada en la figura 4, se ve un rendimiento peor en la figura 5.b (los grafos completos) que en la 5.a (los àrboles). Se mostrará en la figura 6, como estas instancias construidas para resultar en los tiempos de ejecución màs extremos, muestran tiempos de ejecución que acotan a los tiempos de los casos aleatorios.
+
+\begin{figure}[H] % Example image
+    \includegraphics[width=0.7\textwidth]{graficosEj2/prm1}
+    \label{ni se pa que sirve esto}
+    \caption{Comparación de los tiempos de ejecución para la consultora 1}
+\end{figure}
+
+Se puede apreciar en la figura 6, que si bien hay casos excepcionales dados por las incertezas de la medición empírica, las instancias aleatorias presentan una eficiencia acotada por los mejores y peores casos predichos. Con esto se concluye que efectivamente el tiempo de ejecución que requiere la consultora 1 depende de la cantidad de aristas del grafo de entrada, si bien estos no aumentan la complejidad teórica, si pueden causar una duplicación en el  tiempo de ejecución entre los peores y los mejores casos.
+
+\subsubsection{Consultora 2}
+
+Al igual que con la consultora 1, el estudio teórico de la complejidad del algoritmo lleva a esperar ciertos resultados en la etapa experimental. En este caso particular, se verá que el tiempo de ejecución depende de la cantidad de servidores del árbol a analizar por la consultora 2. La relación entre el tiempo y el tamaño de entrada es de forma lineal, y no puede variar según la cantidad de aristas ya que el arbol siempre tiene la misma cantidad. Lo que si afectará ligeramente el tiempo de ejecución es el largo del camino máximo del arbol, como se verá en el estudio de los peores y mejores casos del algoritmo.
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/r2}
+        \caption[center]{tiempo según n}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/complejidad2}
+        \caption{tiempo dividido $n$}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Tiempo de ejecución de la consultora 2 para instancias aleatorias}
+\end{figure}
+
+En la figura 7.a se ve como el tiempo necesario para la resolución de la instancia de entrada depende directamente del tamaño de la misma. Se ve que presenta la forma de una recta, una función lineal. En la figura 7.b se repitió la idea de dividir a la función por el tamaño de entrada, buscando como resultado un gráfico de una recta horizontal, constante, que confirme la complejidad lineal de nuestro algoritmo. Desechando los casos pequeños, y analizando los tamaños mayores (que son los que nos interesan al estudiar la complejidad teórica de los algoritmos) vemos que tienden a una constante tal como se había predicho.
+
+A continuación, una vez confirmada la complejidad para los casos genéricos, se buscó encontrar los casos en los cuales el algoritmo mejoraba o empeoraba su eficiencia. Como en la primera parte, el BFS, no queda otra opción que recorrer todo el árbol, el énfasis se puso en el final, la reconstrucción del camino máximo para luego encontrar su medio. Si este camino fuera corto este proceso sería rápido, inversamente así para un camino más largo.
+
+Se decidió generar mejores casos en los que el camino máximo del árbol fuera de tamaño mínimo (2), para esto se generaron grafos en los que un nodo estuviera conectado a todos los demás (de este se colgará el arbol al terminar el algoritmo) sin ninguna otra arista extra, para asegurarnos que este era el árbol devuelto por la consultora 1.
+
+Para los peores casos se debían generar grafos en los que el AGM resultante tuviera un camino de longitud n-1 (contando las aristas), esto se logra generando instancias en las que cada servidor tiene como vecinos al servidor inmediátamente anterior a éste, y al servidor inmediatamente posterior.
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/m2}
+        \caption[center]{mejor caso}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{graficosEj2/p2}
+        \caption{peor caso}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Tiempo de ejecución de la consultora 2 para el mejor y el peor caso}
+\end{figure}
+
+En ambos gráficos de la figura 8 se puede apreciar claramente la forma lineal de la complejidad del algoritmo de la consultora 2. Lamentablemente no es claro que los peores casos sean efectivamente peores, para esto se recurrirá a la figura 9 en la que se comparan los mejores y peores casos con las instancias aleatorias descriptas previamente.
+
+\begin{figure}[H] % Example image
+    \includegraphics[width=0.8\textwidth]{graficosEj2/prm2}
+    \label{ni se pa que sirve esto}
+    \caption{Comparación de los tiempos de ejecución para la consultora 2}
+\end{figure}
+
+Ahora si, en la figura 9 se puede ver como los casos con un camino máximo de longitud 2 son resueltos por el algoritmo de forma más rápida que aquellos que tienen un camino máximo más largo, especialmente más rápida que los peores casos con un camino máximo que recorra todo el árbol.
+
+\subsection{Conclusiones}
+
+Se puede concluir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y  $\mathcal{O} (n)$)  son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 6 y 9 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios es puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo distintas condiciones de las instancias de entrada. Sabemos entonces que las consultoras en cuestión presentaran tiempos de ejecución menores para grafos con una menor cantidad de aristas y cuyo AGM presente un camino máximo lo más corto posible.
+
+
+\section{Problema 3}
+
+\subsection{El Problema}
+
+\subsubsection{Descripcion}
+Planteado de otra forma, la situación que tenemos es un grafo (no orientado) con pesos positivos en las aristas $G$ en el cual tenemos una particion de $V(G)={F,C}$ dada  (con $|C| \geq |F|$) y queremos hallar un subconjunto de aristas $E' \subseteq X(G)$ que tenga peso minimo (o sea minimizar $\sum\limits_{e \in E'} {peso(e)}$) y que cumpla que para todo nodo en $C$ existe un camino a algun nodo en $F$ (o sea, para toda componente conexa $W$ del  grafo $H=(V(G),E')$,  $\exists v \in F$). Nos piden hallar ese costo minimo (i.e $\sum\limits_{e \in E'} {peso(e)}$) cuantas y qué aristas lo logran.
+\subsubsection{Ejemplos}
+
+\begin{itemize}
+\item Consideremos $C_{n}$ (supongamos n par) con pesos asociados todos iguales y bipartito con $F$ y $C$ los elementos de la partición (o sea, en el ciclo, si lo recorremos en algun sentido, hay un nodo de $F$, luego uno de $C$, luego uno de $F$ y así sucesivamente). Es claro que debemos minimizar la cantidad de aristas (todas pesan lo mismo y tienen costo positivo) y como tenemos $|C|=n/2$ necesitaremos al menos $n/2$ aristas y consideramos alguna de las que la unen con alguno de sus vecinos para cada elemento de $C$. Así tenemos nuestro conjunto de aristas que minimizan la suma (será $k*(n/2)$ si k es el peso de cada arista), de hecho es claro en este ejemplo que el conjunto de aristas que minimiza la suma no es único (de hecho hay $2^n/2$ -pues para cada elemento de $C$ elijo una de las dos aristas que inciden en el)
+
+\item Consideremos ahora un grafo compuesto de $q$ componentes conexas donde cada una es un $C_{n}$ como mostramos en el ejemplo anterior (con n par para toda componente conexa y con un elemento de $C$ y uno de $F$ alternadamente y pesos iguales $k$). Para minimizar la cantidad de aristas, debemos resolver el problema en cada una de las componentes conexas, pues la única forma de llegar a un elemento de una componente conexa es desde alguna fábrica que este en esa componente. Luego, como vimos cada componente se resuelve con $k*(n/2)$ de peso total, por ende la solución total tendra $q*k*(n/2)$
+\end{itemize}
+
+\subsection{El Algoritmo}
+
+\subsubsection{Resumen}
+Lo que tenemos que hacer es algo bastante parecido a encontrar un AGM, pero como hemos visto incluso en los ejemplos, la solución no tiene por qué ser un arbol. Más aún ni siquiera tiene que generar (puede que haya un nodo que no sea alcanzable, en ese caso sería uno de $F$ -por ejemplo uno que tiene un costo altísimo cada arista que lo une con cualquier otro y siempre es más barato llegar a sus vecinos desde otro elemento de $F$-). Pero si nos detenemos a pensar, no tiene sentido que haya un ciclo, ya que sacamos una arista y (como todas tienen peso positivo) disminuye el peso. Luego nuestro grafo solucion no es un AGM, pero si es un bosque que tenga a todos los elementos de $C$ y sea de peso mínimo. Y un bosque es un conjunto de arboles, queremos hacer practicamente lo mismo que en un AGM, pero sin mantener necesariamente la conexión en el grafo que vamos generando (al que le agregamos un nodo y una arista en cada iteración). De hecho, sabemos que este grafo tendrá exactamente $|C|$ aristas, una por cada iteración ya que en cada iteración agregaremos al cliente "más cercano". Así surge la idea de lo que realizamos: hacer Prim pero comenzando en vez de con un nodo, con todos los nodos de $F$.
+\subsubsection{El Pseudocódigo}
+ Como se trata efectivamente de una variación del algoritmo de Prim, incluiremos un pseudocodigo
+
+
+\begin{algorithm}[H]
+    \SetKwInOut{Input}{Input}
+    \SetKwInOut{Output}{Output}
+
+    \underline{PrimModificado} $(G)$\;
+    \Input{$Grafo G$, $F \subseteq V(G)$}
+    \Output{$costo \in \NN_{0}$, $lista$ vector de aristas}
+       \For {$v$ en $V(G)$ }{
+       
+       		distancia[u] = $\infty$;
+       		
+       		padre[u] = NULL;
+       		
+       		Añadir a la cola (u, distancia[u]));
+       }
+		\For {$f$ en $F$ }{       
+      		 distancia[f]=0; \Comment{Cambio respecto de Prim}
+      	}
+       
+       \While{NO esta vacia la cola}{
+			\For{v adyacente a u}{ 
+				u = extraer el de menor distancia de la cola que $\notin F$; \Comment{Cambio respecto de Prim}
+				
+				\If{ $v \in cola \land distancia[v] > peso(u, v)$}{
+        		
+       			padre[v] = u;
+        			
+       			distancia[v] = peso(u, v);
+        			
+       			Actualizar la cola (v, distancia[v]);
+       			}   		
+       		}       
+       }  
+       	\caption{Devuelve un conjunto de aristas que conectan a todo elemento de $C$ con alguno de $F$ con menor costo y su costo} 
+\end{algorithm}
+
+
+Como se ve en el pseudocódigo, para resolver el problema usamos el mismo algoritmo que usa Prim, solo que en vez de empezar con algun nodo (cualquiera) marcado como el primer elemento del AGM, empezaremos con todos los elementos de $F$ marcados. Además, cuando tomemos el nodo de menor distancia, tomamos el de menor distancia y que $\in C$. Así en cada iteración incluimos al nodo de $C$ que esta a menor distancia del grafo hasta entonces generado, cada vez aumentamos el grafo inicial en un nodo hasta que no queden mas elementos en $C$ (a diferencia de prim en que este grafo siempre era un arbol), y en cada paso siempre incluimos al que suma menor costo (y le actualizamos la distancia a todos sus vecinos). Así, cuando no queden más elementos de $C$ por incluir, tendremos el conjunto de aristas que buscamos y serán las de peso mínimo (el argumento es exactamente el mismo que el de correctitud de Prim, siempre a cada paso agregamos el más cercano - si hubiera una arista $e$ que convenía ser incluida en vez de otra $f$ porque disminuiría el peso, no habría elegido a $f$ en ningun momento pues siempre habría algun elemento a incluir con un costo menor al de $f$-). 
+
+\subsection{Complejidad}
+
+Como ya analizamos en el problema 2, la complejidad de prim, por como lo implementamos, es $\mathcal{O} (n^2)$ y por ende ahora será $\mathcal{O} ((|F|+|C|)^2)$ pero si recordamos, el enunciado nos asegura que $|C| \geq |F|$, luego $(|F|+|C|) \leq 2 *|C| = \mathcal{O} (|C|$ y por lo tanto, $\mathcal{O} ((|F|+|C|)^2) \leq \mathcal{O} (|C|^2)$. Mostramos así que el algoritmo cumple la complejidad propuesta. Es claro que nuestra variación no afecta en absoluto la complejidad de prim, pues como implementamos la cola como un arreglo y buscar el minimo nos tomaba $\mathcal{O} (n)$, encontrar el minimo dentro de los que pertenecen a $C$ sigue siendo $\mathcal{O} (n)$ (donde n es el tamaño de la cola). Agregamos si un ciclo que inicializa todas las distancias de los elementos que estan en $F$, eso es $|F|$ operaciones $\mathcal{O} (1)$, lo que es $\mathcal{O} (|F|) \leq \mathcal{O} (|C|)$ y por ende no suma complejidad. Así, hemos probado que la modificación del algoritmo de Prim, mantiene la misma complejidad teórica, por ende hemos probado que nuestro algoritmo es complejidad $\mathcal{O} (|C|^2)$.
+
+\subsection{Experimentación}
+
+\subsubsection{Contexto}
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel(R) Atom(TM) CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leia el siguiente). 
+El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++). En todos los experimentos se medira en Ticks el tiempo de ejecución.
+\subsubsection{Experimentos}
+Primero, se genero una serie de casos aleatorios, generados de la misma forma que en el Problema 2.
+\begin{wrapfigure}{R}{0.4\textwidth}
+\centering
+\includegraphics[width=0.4\textwidth]{r1p3.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias.}
+\end{wrapfigure}
+
+ La única diferencia radicó en que en vez de a partir del segundo nodo conectarlo con alguno de los anteriores para asegurar conexidad, esto se hizo a partir del nodo $F+1$ (los nodos mayores a $F$ serán los clientes, y los menores o iguales las fábricas). Se corrieron casos con $C$ entre $1$ y $60$ y para cada uno de ellos, se movió el $F$ entre $1$ y $C$ (para respetar que siempre $C>F$) y para cada uno de esos valores de $C$ y $F$se ejecutaron $10$ casos aleatorios (en donde todo se realizo como se describió en el problema 2).
+
+Como vemos en el gráfico de la Figura 10, parece haber un crecimiento del tiempo de ejecución cuando crece la cantidad de clientes. Para verificar que este crecimiento hace que efectivamente estamos resolviendo el problema en $\mathcal{O}(|C|^2)$, hicimos un grafico de Ticks en función de clientes al cuadrado, donde se puede ver (salvo para pocos clientes) que el gráfico es acotable por una constante (ver figura 11.a). En los primeros casos de clientes no sucede ya que al ser pequeña la cantidad de clientes, toma mucha más importancia el termino constante. Más aún, como la notación $\mathcal{O}$ solo nos habla de la complejidad asintótica, por lo que esto tiene sentido. Pero dejando de lado estas instancias de $	|C|$ pequeño, se ve que se puede acotar por una constante como se esperaba teóricamente (ver Figura 11.b).
+
+
+\begin{figure}[H] % Example image
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{wasdcomplejidad1.png}
+        \caption[center]{eje x entre 0 y 60 (todas las instancias).}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.45\textwidth}
+        \includegraphics[width=\textwidth]{zoom1p3.png}
+        \caption{eje x acotado entre 20 y 60.}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \caption{Gráfico de segundos de ejecución en función de cantidad de clientes al cuadrado para instancias aleatorias}
+\end{figure}
+
+
+\normalsize
+
+Sabemos que todos los pesos son enteros (del tipo int de C++) y el costo de hacer cualquier operación sobre los mismos no cambia (al menos para el modelo de complejidades que utilizamos, en que suponemos de costo básico todas estas operaciones). Como en el algoritmo, lo que se ve claramente en el pseudocódigo, lo único que hacemos con los pesos es compararlos de a pares para decidir cual es el menor e incluirlo y además lo sumamos al costo total. Como la comparación y la suma no dependen de qué entero sea, podemos concluir que no hay influencia alguna del peso de las aristas, o sea el costo de reparar cada ruta. Por ende esta variable siempre se tomó aleatoria, teniendo la certeza de que no influiría en las otras. 
+
+Por otro lado, si bien la cantidad de fábricas no aparece en la complejidad teórica, al empezar el algoritmo de PrimModificado las "pintamos" todas y revisamos todos sus vecinos para actualizar las distancias al AGM. Pero si recordamos el enunciado, este nos da la condicion de que  $|F|<|C|$, razón por la que no influye $|F|$ en la complejidad teórica explicada previamente. Pero a la hora de efectivamente ejecutar el algoritmo, estas operaciones se realizan y, aunque estén acotados teóricamente, con una mayor cantidad de fábricas habrá que chequear más vecinos en el paso inicial, lo que aumenta el tiempo de ejecución. Para comprobar esta correlacion realizamos el siguiente grafico:
+
+\begin{wrapfigure}{R}{0.6\textwidth}
+\centering
+\includegraphics[scale=0.6]{Fabricas-clientes.png}
+\caption{ \textit{Gráfico de segundos de ejecución en función de cantidad de clientes para instancias aleatorias con $|fabricas|=|clientes|-k$ con $k=1, 10, 20, 30, 40, 50$.}}
+\end{wrapfigure}
+
+Como vemos en la Figura 12, cuanta mayor cantidad de fabricas tengamos, en relación con la cantidad de clientes, el tiempo de ejecución es mayor (fabricas=clientes-1 es el de mayor y fabricas=clientes-50 es el de menor). Como se explico anteriormente, esto tiene sentido ya que al principio del algortimo chequeamos todos los vecinos de las fábricas (al ser los primeros nodos pintados en Prim).
+
+
+ 
+ \begin{wrapfigure}[14]{R}{0.4\textwidth}
+\centering
+\includegraphics[scale=0.4]{pearson.png}
+\caption{ Gráfico de segundos de ejecución en función de cantidad de rutas para instancias aleatorias con el índice de pearson.}
+\end{wrapfigure}
+ 
+  
+ Queda por analizar entonces la dependencia del tiempo de ejecución en funcion de la variable $R$. Sabemos que la complejidad del algoritmo es $\mathcal{O} (|C|^2)$, pero si recordamos la complejidad teórica cuando calculamos la del algoritmo de Prim, en un momento recorremos todos los vecinos de un nodo, y como repetimos esto para todos los nodos, en total lo hacemos $X(G)$ veces que en este caso es $R$. Luego, como $|V(G)|^2 \geq |X(G)|$ para todo grafo G, acotamos el $R$ por $|C|^2$, pero este $R$ influye en el tiempo de ejecución, lo que nos lleva a pensar que dentro de instancias de igual tamaño, las que tengan mayor cantidad de aristas tendrán un mayor tiempo de ejecución y las que tengan menos aristas un menor tiempo de ejecución.
+
+
+ Para ver esto, realizamos un gráfico de tiempo de ejecución en funcion de $R$. Efectivamente en el gráfico parecía verse una correlación, lo que verificamos utilizando el índice de pearson, como se puede ver en la Figura 13.
+
+
+Efectivamente, hay correlación (ya que el p-value es 0) y como el índice de pearson en positivo, este nos indica que al crecer la cantidad de rutas, crece el tiempo de ejecución. 
+
+Trataremos de entender si esto es porque al tomar valores mayores de $R$, deben ser mayores los de $|F|+|C|$ (puesto que $R \leq (|C|+|F|)(|C|+|F|-1)/2$ ya que la maxima cantida de aristas -rutas- se da en el completo $K_{|C|+|F|}$, que es el que logra la igualdad) y por ende, como hemos visto, mayor el tiempo de ejecución. Para esto, fijamos la cantidad de fábricas y clientes y analizamos la relación del tiempo de ejecución respecto de $R$ siendo esta la única variable libre.
+
+\vspace{15mm}
+
+\begin{figure}[h!] % Example image
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{60clientes.png}
+        \caption[center]{$|C|$=60}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{50clientes.png}
+        \caption{$|C|$=50}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}
+	\begin{subfigure}[b]{0.3\textwidth}
+        \includegraphics[width=\textwidth]{40clientes.png}
+        \caption{$|C|$=40}
+        \label{ni se pa que sirve esto}
+    \end{subfigure}    
+    \caption{Gráfico de segundos de ejecución en función de $|R|$ para valores fijos de $|C|$ y $|F|$}
+\end{figure}
+
+En la Figura 14, se tiene en cada subfigura, una cantidad de clientes fijada (en 60, 50 y 40) y para cada una de esas subfiguras, tenemos en distintos colores distintas cantidades de fábricas dada esa cantidad de clientes. Lo que se graficó es el tiempo de ejecución en función de la cantidad de rutas y se puede ver que en todos los valores de $c$, a mayor cantidad de rutas mayor tiempo de ejecución (ya que en todos los colores es creciente). Más aún, volvemos a verificar la dependencia según la cantidad de fábricas ya que los colores que representan mayor cantidad de fábricas  tienen un mayor tiempo de ejecución.
+
+Como ya se dijo, con pearson se observó que los peores y mejores casos dependen de la cantidad de aristas que tiene el grafo. Además, por los gráficos 11 y 13 se puede ver que la cantidad de fábricas afecta también al rendimiento del algoritmo.
+
+En este sentido, los peores casos ocurren cuando $f=c-1$ y $r=\frac{(c+f)(c+f-1)}{2}$. La influencia de $f$ se debe a que en la instancia inicial, el conjunto de rutas que el algoritmo chequeará será mucho mayor que si solo hubiera una fábrica. De este modo, mientras mayor sea $f$, mayor será la cantidad de aristas que el algoritmo comenzará a examinar. Por su lado, si en un grafo de $n$ nodos, la mayor cantidad de aristas posibles es $\frac{n(n-1)}{2}$ (el caso de un grafo completo) y en nuestro caso, $n=c+f$, un grafo completo de nuestro problema tiene $\frac{(c+f)(c+f-1)}{2}$ aristas. Ahora bien, como se ve con pearson, mientras más aristas hay en el grafo, más tarda en ejecutarse el algoritmo.
+
+De este modo, se experimentaron los mejores y peores casos para observar su comportamiento. Para ello se minimizaron y maximizaron los valores de $f$ y $r$, es decir, se fijaron los valores de $f=1$ y $r=c+f-1$ para el mejor caso y $f=c-1$ y $r=\frac{(c+f)(c+f-1)}{2}$ para el peor caso. De este modo, se pueden observar estos resultados en la Figura 15 donde, en verde están los mejores casos y en rojo los peores.
+
+
+\begin{figure}[h!]
+\centering
+\includegraphics[scale=0.7]{rpm3.png}
+\caption{Gráfico de ticks en función de cantidad de trabajos al cuadrado para instancias aleatorias.}
+\end{figure}
+
+Como se puede observar en el gráfico, los mejores casos acotan por debajo al resto de los puntos mientras que los peores los acotan mayormente por arriba. De este modo, se puede concluir efectivamente que estos son los mejores y peores casos.
+
+Finalmente, la complejidad es $\mathcal{O} ((c+f)*c)$ (pues son $c$ iteraciones de verificaciones de las aristas de $c+f$ nodos) pero como $f$ está acotada por $c$, $c+f \leq c+c = 2c \implies \mathcal{O} ((c+f)*c) = \mathcal{O} (2c*c) = \mathcal{O} (c^2)$.
+
+
+\subsection{Conclusiones}
+
+Salvo una pequeña modificación en el código, sabemos que es un problema muy parecido al 2 (más aún porque ambos se implementaron con Prim y con un arreglo como estructura para la cola de prioridad). Por lo tanto, los resultados observados son bastante similares. La única diferencia a considerar es que en este problema son dos las variables que determinan el número total de nodos. De tal modo, se pudieron analizar por separado las influencias de estas variables en la complejidad y se pudo observar que una de ellas ($f$) influye bastante en la determinación del mejor o peor caso. Sin embargo, como está acotada por la otra ($c$), esta es la que realmente define la complejidad teórica total que es $\mathcal{O} (c^2)$.
+
+\end{document}
+
