@@ -404,7 +404,7 @@ A los pesos de las aristas se les dio un rango amplio de valores posibles, desde
 Se tuvo cuidado también de no generar multigrafos: en la generación de cada caso se construyó una matriz de adyacencia a la que se agregaban aristas nuevas si y solamente si sus extremos no estaban ya conectados en la matriz de adyacencia.
 
 Cada vez que se tomaron numeros aleatorios en la generación de instancias se utilizó una distribución uniforme 
-\footnote{ Se utilizó la función rand() de librerías de C++ en el rango correspondiente, para mas detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }.
+\footnote{ Se utilizó la función rand() de librerías de C++ en el rango correspondiente, para mas detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }. El tiempo se midió no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++). En todos los experimentos el tiempo se mide en Ticks.
 
 
 \subsubsection{Consultora 1}

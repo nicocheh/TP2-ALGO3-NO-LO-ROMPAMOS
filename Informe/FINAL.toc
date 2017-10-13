@@ -29,12 +29,12 @@
 \contentsline {section}{\numberline {3}Problema 3}{14}{section.3}
 \contentsline {subsection}{\numberline {3.1}El Problema}{14}{subsection.3.1}
 \contentsline {subsubsection}{\numberline {3.1.1}Descripci\IeC {\'o}n}{14}{subsubsection.3.1.1}
-\contentsline {subsubsection}{\numberline {3.1.2}Ejemplos}{14}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.2}Ejemplos}{15}{subsubsection.3.1.2}
 \contentsline {subsection}{\numberline {3.2}El Algoritmo}{15}{subsection.3.2}
 \contentsline {subsubsection}{\numberline {3.2.1}Resumen}{15}{subsubsection.3.2.1}
-\contentsline {subsubsection}{\numberline {3.2.2}El Pseudoc\IeC {\'o}digo}{15}{subsubsection.3.2.2}
+\contentsline {subsubsection}{\numberline {3.2.2}El Pseudoc\IeC {\'o}digo}{16}{subsubsection.3.2.2}
 \contentsline {subsection}{\numberline {3.3}Complejidad}{16}{subsection.3.3}
-\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{16}{subsection.3.4}
-\contentsline {subsubsection}{\numberline {3.4.1}Contexto}{16}{subsubsection.3.4.1}
-\contentsline {subsubsection}{\numberline {3.4.2}Experimentos}{16}{subsubsection.3.4.2}
-\contentsline {subsection}{\numberline {3.5}Conclusiones}{19}{subsection.3.5}
+\contentsline {subsection}{\numberline {3.4}Experimentaci\IeC {\'o}n}{17}{subsection.3.4}
+\contentsline {subsubsection}{\numberline {3.4.1}Contexto}{17}{subsubsection.3.4.1}
+\contentsline {subsubsection}{\numberline {3.4.2}Experimentos}{17}{subsubsection.3.4.2}
+\contentsline {subsection}{\numberline {3.5}Conclusiones}{20}{subsection.3.5}
