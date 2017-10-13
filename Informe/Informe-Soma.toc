@@ -1,7 +1,7 @@
 \select@language {spanish}
 \contentsline {section}{\numberline {1}Problema 1}{2}{section.1}
 \contentsline {subsection}{\numberline {1.1}El Problema}{2}{subsection.1.1}
-\contentsline {subsubsection}{\numberline {1.1.1}Descripcion}{2}{subsubsection.1.1.1}
+\contentsline {subsubsection}{\numberline {1.1.1}Descripci\IeC {\'o}n}{2}{subsubsection.1.1.1}
 \contentsline {subsubsection}{\numberline {1.1.2}Ejemplos}{2}{subsubsection.1.1.2}
 \contentsline {subsection}{\numberline {1.2}El Algoritmo}{2}{subsection.1.2}
 \contentsline {subsubsection}{\numberline {1.2.1}La funci\IeC {\'o}n de din\IeC {\'a}mica}{2}{subsubsection.1.2.1}
@@ -10,7 +10,7 @@
 \contentsline {subsection}{\numberline {1.4}Experimentaci\IeC {\'o}n}{5}{subsection.1.4}
 \contentsline {subsubsection}{\numberline {1.4.1}Contexto}{5}{subsubsection.1.4.1}
 \contentsline {subsubsection}{\numberline {1.4.2}Experimentos}{5}{subsubsection.1.4.2}
-\contentsline {subsection}{\numberline {1.5}Conclusiones}{6}{subsection.1.5}
+\contentsline {subsection}{\numberline {1.5}Conclusiones}{7}{subsection.1.5}
 \contentsline {section}{\numberline {2}Problema 2}{7}{section.2}
 \contentsline {subsection}{\numberline {2.1}El Problema}{7}{subsection.2.1}
 \contentsline {subsubsection}{\numberline {2.1.1}Descripcion}{7}{subsubsection.2.1.1}
