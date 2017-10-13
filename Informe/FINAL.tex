@@ -446,7 +446,8 @@ Por otro lado, para entender los contextos de uso en los que este algoritmo most
 Se puede observar en las figuras 5.a y 5.b como, si bien se mantiene a grandes rasgos la dependencia de la cantidad de servidores ya confirmada en la figura 4, se ve un rendimiento peor en la figura 5.b (los grafos completos) que en la 5.a (los árboles). Se mostrará en la Figura 6, cómo estas instancias construidas para resultar en los tiempos de ejecución más extremos, muestran tiempos de ejecución que acotan a los tiempos de los casos aleatorios.
 
 \begin{figure}[H] % Example image
-    \includegraphics[width=0.7\textwidth]{graficosEj2/prm1}
+\centering
+    \includegraphics[width=0.6\textwidth]{graficosEj2/prm1}
     \label{ni se pa que sirve esto}
     \caption{Comparación de los tiempos de ejecución para la consultora 1}
 \end{figure}
@@ -475,7 +476,7 @@ En la figura 7.a se ve cómo el tiempo necesario para la resolución de la insta
 
 A continuación, una vez confirmada la complejidad para los casos genéricos, se buscó encontrar los casos en los cuales el algoritmo mejoraba o empeoraba su eficiencia. Como en la primera parte (en el BFS) siempre se recorre todo el árbol, el énfasis se puso en el final, la reconstrucción del camino máximo para luego encontrar su medio. Si este camino fuera corto este proceso sería rápido, mientras que si fuera más largo el tiempo de ejecución sería mayor.
 
-Se decidió generar mejores casos en los que el camino máximo del árbol fuera de tamaño mínimo (2), para esto se generaron grafos en los que un nodo estuviera conectado a todos los demás (de este se "colgará" el árbol al terminar el algoritmo) sin ninguna otra arista extra, para asegurarnos que este era el árbol devuelto por la consultora 1.
+Se decidió generar mejores casos en los que el camino máximo del árbol fuera de tamaño mínimo (2), para esto se generaron grafos en los que un nodo estuviera conectado a todos los demás (de este se $"$colgará$"$ el árbol al terminar el algoritmo) sin ninguna otra arista extra, para asegurarnos que este sea el árbol devuelto por la consultora 1.
 
 Para los peores casos se debían generar grafos en los que el AGM resultante tuviera un camino máximo de longitud $n-1$ (contando la cantidad de aristas -ya que cada arista tiene el mismo peso-), esto se logra generando instancias en las que cada servidor tiene como vecinos sólamente al servidor inmediatamente anterior y al inmediatamente posterior.
 
@@ -501,11 +502,11 @@ En ambos gráficos de la Figura 8 se puede apreciar claramente la forma lineal d
     \caption{Comparación de los tiempos de ejecución para la consultora 2}
 \end{figure}
 
-Ahora sí, en la Figura 9 se puede ver cómo los casos con un camino máximo de longitud 2 son resueltos por el algoritmo de forma más rápida que aquellos que tienen un camino máximo más largo, especialmente más rápida que los peores casos con un camino máximo que recorra todo el árbol.
+Ahora sí, en la Figura 9 se puede ver cómo los casos con un camino máximo de longitud 2 son resueltos por el algoritmo de forma más rápida que aquellos que tienen un camino máximo más largo, especialmente más rápida que los peores casos con un camino máximo que recorra todo el árbol. Aquí se ve también que efectivamente se trataban de peores y mejores casos ya que acotan superior e inferiormente (respectivamente) los tiempos de ejecución de los generados de forma aleatoria.
 
 \subsection{Conclusiones}
 
-Se puede concluir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y $\mathcal{O} (n)$)  son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 6 y 9 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios es puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo diferentes condiciones de las instancias de entrada. Sabemos, entonces, que las consultoras en cuestión presentarán tiempos de ejecución menores para grafos con una menor cantidad de aristas y cuyo AGM presente un camino máximo lo más corto posible.
+Se pudo verificar a partir de la experimentación computacional que las complejidades teóricas predichas ( $\mathcal{O} (n^2)$ y $\mathcal{O} (n)$) son efectivamente ciertas. Además, con el estudio de los peores y mejores casos comprobados en las figuras 6 y 9 se obtuvo información valiosa sobre el desempeño de los algoritmos bajo distintas condiciones de uso. Con este tipo de estudios se puede diferenciar entre distintas implementaciones de algoritmos que si bien cumplen con la misma complejidad teórica, presentan un desempeño distinto bajo diferentes condiciones de las instancias de entrada. También pudimos conlcuir que efectivamente había dependencia respecto de la cantidad de aristas del grafo para el tiempo de ejecución de la consultora 1 y hallamos una dependencia respecto del la longitud del cámino máximo del AGM (devuelto por la consultora 1) para el tiempo de ejecución de la consultora 2. Sabemos, entonces, que las consultoras en cuestión presentarán tiempos de ejecución menores para grafos con una menor cantidad de aristas y tales que todo AGM presente un camino máximo lo más corto posible. Recíprocamente los tiempos serían mayores a mayor cantidad de aristas y un cámino maximo lo más largo posible en todo AGM.
 
 
 \section{Problema 3}
@@ -576,7 +577,7 @@ Como ya analizamos en el problema 2, la complejidad de prim, por como lo impleme
 \subsection{Experimentación}
 
 \subsubsection{Contexto}
-La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel$^\textregistered$ Atom\texttrademark CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se le\'ia el siguiente). 
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel Atom $\texttrademark$ CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se le\'ia el siguiente). 
 El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++). En todos los experimentos se medir\'a en Ticks el tiempo de ejecución.
 \subsubsection{Experimentos}
 Primero, se genero una serie de casos aleatorios, generados de la misma forma que en el Problema 2.
@@ -612,7 +613,7 @@ Sabemos que todos los pesos son enteros (del tipo \texttt{int} de C++) y el cost
 
 Por otro lado, si bien la cantidad de fábricas no aparece en la complejidad teórica, al empezar el algoritmo de PrimModificado las "pintamos" todas y revisamos todos sus vecinos para actualizar las distancias al AGM. Pero si recordamos el enunciado, este nos da la condici\'on de que  $|F|<|C|$, razón por la que no influye $|F|$ en la complejidad teórica explicada previamente. Pero a la hora de efectivamente ejecutar el algoritmo, estas operaciones se realizan y, aunque estén acotados teóricamente, con una mayor cantidad de fábricas habrá que chequear más vecinos en el paso inicial, lo que aumenta el tiempo de ejecución. Para comprobar esta correlaci\'on realizamos el siguiente gr\'afico:
 
-\begin{wrapfigure}{R}{0.6\textwidth}
+\begin{wrapfigure}{l}{0.6\textwidth}
 \centering
 \includegraphics[scale=0.6]{Fabricas-clientes.png}
 \caption{ \textit{Gráfico de tiempo de ejecución en función de cantidad de clientes para instancias aleatorias con $|fabricas|=|clientes|-k$ con $k=1, 10, 20, 30, 40, 50$.}}
@@ -662,9 +663,9 @@ Trataremos de entender si esto es porque al tomar valores mayores de $R$, deben 
 
 En la Figura 14, se tiene en cada subfigura, una cantidad de clientes fijada (en 60, 50 y 40) y para cada una de esas subfiguras, tenemos en distintos colores distintas cantidades de fábricas dada esa cantidad de clientes. Lo que se graficó es el tiempo de ejecución en función de la cantidad de rutas y se puede ver que en todos los valores de $c$, a mayor cantidad de rutas mayor tiempo de ejecución (ya que en todos los colores es creciente). Más aún, volvemos a verificar la dependencia según la cantidad de fábricas ya que los colores que representan mayor cantidad de fábricas tienen un mayor tiempo de ejecución.
 
-Como ya se dijo, con pearson se observó que los peores y mejores casos dependen de la cantidad de aristas que tiene el grafo. Además, por los gráficos 11 y 13 se puede ver que la cantidad de fábricas afecta también al rendimiento del algoritmo.
+Como ya se dijo, se observó que hay dependendencia en la cantidad de rutas que tiene el grafo, por esto se trabajo con esto en búsqueda de generar mejores y peores casos. Además, por los gráficos 11 y 13 se puede ver que la cantidad de fábricas afecta también al rendimiento del algoritmo, lo que también se tuvo en cuenta al generar estos casos.
 
-En este sentido, los peores casos ocurren cuando $f=c-1$ y $r=\frac{(c+f)(c+f-1)}{2}$. La influencia de $f$ se debe a que en la instancia inicial, el conjunto de rutas que el algoritmo chequeará será mucho mayor que si solo hubiera una fábrica. De este modo, mientras mayor sea $f$, mayor será la cantidad de aristas que el algoritmo comenzará a examinar. Por su lado, si en un grafo de $n$ nodos, la mayor cantidad de aristas posibles es $\frac{n(n-1)}{2}$ (el caso de un grafo completo) y en nuestro caso, $n=c+f$, un grafo completo de nuestro problema tiene $\frac{(c+f)(c+f-1)}{2}$ aristas. Ahora bien, como se ve con pearson, mientras más aristas hay en el grafo, más tarda en ejecutarse el algoritmo.
+En este sentido, los peores casos ocurren cuando $f=c-1$ y $r=\frac{(c+f)(c+f-1)}{2}$. La influencia de $f$ se debe a que en la instancia inicial, el conjunto de rutas que el algoritmo chequeará si incluir o no en el grafo que esta generando será mucho mayor que si solo hubiera una fábrica. De este modo, mientras mayor sea $f$, mayor será la cantidad de aristas que el algoritmo comenzará a examinar. Por otro lado, en un grafo de $n$ nodos, la mayor cantidad de aristas posibles es $\frac{n(n-1)}{2}$ (el caso de un grafo completo) y en nuestro caso, $n=c+f$, por ende un grafo completo de nuestro problema tiene $\frac{(c+f)(c+f-1)}{2}$ aristas. Ahora bien, como ya se analizó, mientras más aristas hay en el grafo, más tarda en ejecutarse el algoritmo.
 
 De este modo, se experimentaron los mejores y peores casos para observar su comportamiento. Para ello se minimizaron y maximizaron los valores de $f$ y $r$, es decir, se fijaron los valores de $f=1$ y $r=c+f-1$ para el mejor caso y $f=c-1$ y $r=\frac{(c+f)(c+f-1)}{2}$ para el peor caso. De este modo, se pueden observar estos resultados en la Figura 15 donde, en verde están los mejores casos y en rojo los peores.
 
@@ -675,14 +676,11 @@ De este modo, se experimentaron los mejores y peores casos para observar su comp
 \caption{Gráfico de tiempo en función de cantidad de trabajos al cuadrado para instancias aleatorias.}
 \end{figure}
 
-Como se puede observar en el gráfico, los mejores casos acotan por debajo al resto de los puntos mientras que los peores los acotan mayormente por arriba. De este modo, se puede concluir efectivamente que estos son los mejores y peores casos.
-
-Finalmente, la complejidad es $\mathcal{O} ((c+f)*c)$ (pues son $c$ iteraciones de verificaciones de las aristas de $c+f$ nodos) pero como $f$ está acotada por $c$, $c+f \leq c+c = 2c \implies \mathcal{O} ((c+f)*c) = \mathcal{O} (2c*c) = \mathcal{O} (c^2)$.
-
+Como se puede observar en el gráfico, los mejores casos acotan por debajo al resto de los puntos mientras que los peores los acotan superiormente. Esto quiere decir que los mejores casos acotan inferiormente los tiempos de ejecución de los generados aleatoriamente y los peores lo hacen superiormente. De este modo, se puede verificar que, efectivamente,estos son mejores y peores casos.
 
 \subsection{Conclusiones}
 
-Salvo una pequeña modificación en el código, sabemos que es un problema muy parecido al 2 (más aún porque ambos se implementaron con Prim y con un arreglo como estructura para la cola de prioridad). Por lo tanto, los resultados observados son bastante similares. La única diferencia a considerar es que en este problema son dos las variables que determinan el número total de nodos. De tal modo, se pudieron analizar por separado las influencias de estas variables en la complejidad y se pudo observar que una de ellas ($f$) influye bastante en la determinación del mejor o peor caso. Sin embargo, como está acotada por la otra ($c$), esta es la que realmente define la complejidad teórica total que es $\mathcal{O} (c^2)$.
+Salvo una pequeña modificación en el código, sabemos que es un problema muy parecido al 2 (más aún porque ambos se implementaron con Prim y con un vecto como estructura para la cola de prioridad). Por lo tanto, los resultados observados son similares. Sin embargo, una importante diferencia a considerar es que en este problema son dos las variables que determinan el número total de nodos. De tal modo, se pudieron analizar por separado las influencias de estas variables en la complejidad y se pudo observar que además de que $c$ influía (lo que era esperable pues determinaba la complejidad teórica), $f$ también lo hacía (si crecía, el tiempo de ejecución también crecía), lo que fue de gran relevancia en la determinación de mejores y peores casos. Concluimos así que la modificación del algoritmo de Prim, si bien pequeña, era muy relevante ya que daba importancia a esta nueva variable respecto del problema 2. Sin embargo, como $f$ está acotada por $c$, es sólo esta última la que define la complejidad teórica que es $\mathcal{O} (c^2)$. Cabe destacar que esta complejidad se pudo validar experimentalmente. udimos ver además que hay influencia de la cantidad de rutas donde al crecer esta, crecía el tiempo de ejecución.  Teniendo en cuenta esto (y que el tiempo de ejecución también crecía cuando f lo hacía), pudimos generar mejores y peores casos.
 
 \end{document}
 
