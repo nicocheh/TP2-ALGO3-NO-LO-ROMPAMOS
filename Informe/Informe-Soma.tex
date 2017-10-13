@@ -201,12 +201,12 @@ El problema pide dados los trabajos y la funcion de costo, dar $A$ o $B$ que min
 \subsection{El Algoritmo}
 
 \subsubsection{La función de dinámica}
-Para resolver el problema, utilizaremos programación dinámica. La idea de esto se basa en que la solución de nuestro problema es calculable en base a la solución de subproblemas (utilizamos optimalidad de subproblemas). Definimos así $f(q,h)$ como la función que asigna el mínimo costo posible para llegar al trabajo $q$-ésimo hecho (habiendo hecho de la 1 hasta la $q$ inclusive) con el trabajo $h$ como el último que se hizo en algunas de las máquinas. Tomamos como dominio de $f$ a los $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$. donde $h=0$ significa que hay una maquina vacía. Es clave notar que siempre que luego de que realizamos el trabajo $q$ en una de las máquinas estará en el tope dicho trabajo, por ende basta definir qué hay en la otra. Definimos a continuación la función para los valores en el dominio ya mencionado:
+Para resolver el problema, utilizaremos programación dinámica. La idea de esto se basa en que la solución de nuestro problema es calculable en base a la solución de subproblemas (utilizamos optimalidad de subproblemas). Definimos así $f(q,h)$ como la función que asigna el mínimo costo posible para llegar al trabajo $q$-ésimo hecho (habiendo hecho del 1 hasta el $q$ inclusive) con el trabajo $h$ como el último que se hizo en algunas de las máquinas. Tomamos como dominio de $f$ a los $q \in [1,2,...,t] \land h \in [0,1,...,q-1]$. donde $h=0$ significa que hay una maquina vacía. Es clave notar que siempre que luego de que realizamos el trabajo $q$ en una de las máquinas estará en el tope dicho trabajo, por ende basta definir qué hay en la otra. Definimos a continuación la función para los valores en el dominio ya mencionado:
 
 \begin{equation}
     f(q,h) =
     \begin{cases*}
-       costo(q,0) & si  $q=1$  $\land$  $h=0 $\\
+       costo(1,0) & si  $q=1$  $\land$  $h=0 $\\
        f(q-1,h)+costo(q,q-1) & si  $h < q-1 $\\
        \displaystyle \min_{0 \leq h \leq q-2} {f(q-1,h)+precios[q][h]}       & caso contrario ($h=q-1$)
     \end{cases*}
@@ -215,20 +215,20 @@ Para resolver el problema, utilizaremos programación dinámica. La idea de esto
 Esta función hace efectivamente lo que queremos:
 \begin{itemize}
 
- \item En el primer caso lo hace pues si $q=1$ esto implica $h=0$ por restricciones de dominio y es la minima cantidad dado que coloqué solo el primer trabajo, pues sí o sí el costo será el de colocar la primera sobre la maquina vacía, por ende será el mínimo.
- \item En el segundo caso también lo hace pues si está un trabajo $h<q-1$ en una máquina es porque el último trabajo colocado (el $q$) se colocó en la otra, por ende previo a finalizar el trabajo $q$, estaba en una máquina el $q-1$ y en otra el $h$. Más aún sabemos que el $q$ lo colocamos sobre el $q-1$. Supongamos $f(q,h)$ el costo mínimo dado el trabajo $q$ hecho y el trabajo $h$ en alguna impresora (análogo para $f(q-1,h)$), si es $f(q,h)<f(q-1,h)+costo(q,q-1)$ luego es absurdo pues $f(q-1,h)$ no es el mínimo, ya que hago la secuencia que da el mínimo en $q$ trabajos hechos con $h$ en una máquina sin el último paso (resto su costo, o sea el de poner a $q$ sobre $q-1$) y me queda que tengo una forma de tener $q-1$ trabajos hechos con $h$ en una máquina con costo $f(q,h)-costo(q,q-1)<f(q-1,h)$ lo que es absurdo pues $f(q-1,h)$ era el mínimo.
- \item En el tercer caso también sucede pues, si está el trabajo $q-1$ en una máquina con la impresión $q$ ya hecha, es porque la impresión $q$ se colocó sobre alguna impresión $h$ con $0 \leq h \leq q-2$. Dado dicho trabajo, de forma totalmente análoga al caso de arriba, debe ser el mínimo buscado con $q$ trabajos hechos y el $q-1$ en una máquina $f(q,q-1)= f(q-1,h)+costo(q,h)$. Luego como no sé cuál trabajo de todos pudo haber sido, me quedo con el mínimo moviendo los $h$ en el rango dado.
+ \item En el primer caso lo hace pues si $q=1$ esto implica $h=0$ por restricciones de dominio y es la minima cantidad dado que coloqué solo el primer trabajo, pues sí o sí el costo será el de colocar el primero sobre la maquina vacía, por ende será el mínimo.
+ \item En el segundo caso también lo hace pues si está un trabajo $h<q-1$ en una máquina es porque el último trabajo colocado (el $q$) se colocó en la otra, por ende previo a finalizar el trabajo $q$, estaba en una máquina el $q-1$ y en otra el $h$. Más aún sabemos que el $q$ lo colocamos sobre el $q-1$. Supongamos $f(q,h)$ el costo mínimo dado el trabajo $q$ hecho y el trabajo $h$ en alguna impresora (análogo para $f(q-1,h)$), si es $f(q,h)<f(q-1,h)+costo(q,q-1)$ luego es absurdo pues $f(q-1,h)$ no es el mínimo, ya que hago la secuencia que da el mínimo en $q$ trabajos hechos con $h$ en una máquina sin el último paso (resto su costo, o sea el de poner a $q$ sobre $q-1$) y me queda que tengo una forma de tener $q-1$ trabajos hechos con $h$ en una máquina con costo $f(q,h)-costo(q,q-1)<f(q-1,h)$ lo que es absurdo pues $f(q-1,h)$ era el mínimo. Luego debe ser $f(q,h) \geq f(q-1,h)+costo(q,q-1)$ y por ende es un mínimo (quizás no el único).
+ \item En el tercer caso también sucede pues, si está el trabajo $q-1$ en una máquina con la impresión $q$ ya hecha, es porque la impresión $q$ se colocó sobre alguna impresión $h$ con $0 \leq h \leq q-2$. Dado dicho trabajo (de forma totalmente análoga al caso de arriba) debe ser el mínimo buscado con $q$ trabajos hechos y el $q-1$ en una máquina $f(q,q-1)= f(q-1,h)+costo(q,h)$. Luego como no sé cuál trabajo de todos pudo haber sido, me quedo con el mínimo moviendo los $h$ en el rango dado.
   \end{itemize}
-Así, definimos una función que resuelve el problema pedido si hallamos el $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ pues es el mínimo costo de realizar hasta el trabajo $t$ (o sea todos) con el trabajo $h$ en alguna máquina (me fijo todos los escenarios posibles como puede terminar la otra máquina, o sea todos los posibles $h$). 
+Así, definimos una función que resuelve el problema pedido si hallamos el $\displaystyle \min_{0 \leq h \leq t-1} {f(n,h)}  $ pues es el mínimo costo de realizar hasta el trabajo $n$ (o sea todos) con el trabajo $h$ en alguna máquina (me fijo todos los escenarios posibles como puede terminar la otra máquina, o sea todos los posibles $h$ y me quedo con alguno que minimice el costo). 
 
-Así, podemos implementar la $f$ dada, donde podemos ir recordando los valores que toma $f$ y evitar calcularlos varias veces. Más aún podríamos mantener una lista (ordenada) de cuáles son los elementos que hay en alguna máquina y cada vez que agregamos un trabajo, chequeamos si lo agregamos sobre el último de la lista y en ese caso lo incluimos al final de esta (sino es porque fue a la otra máquina).
+Así, podemos implementar la $f$ dada, donde podemos ir recordando los valores que toma $f$ y evitar calcularlos varias veces. Más aún podríamos mantener una lista (ordenada) de cuáles son los elementos que hay en alguna máquina y cada vez que agregamos un trabajo, chequeamos si lo agregamos sobre el último de la lista y en ese caso lo incluimos al final de esta (si no, es porque fue a la otra máquina).
 
-Lo que sucede es que tenemos varios subproblemas y en este caso siempre resolvemos todos, por lo que no parece tener una clara ventaja hacerlo top-down. Más aún, hacerlo bottom-up nos permitirá solo guardarnos los subproblemas relativos a tener hecho exactamente hasta el anterior trabajo (con $q-1$ y para todos los $h$, los menores no los utilizo en el calculo de $f(q,h)$), o sea, nos reduce la complejidad espacial. Esto es así pues incialmente debíamos guardar el valor de $f$ $\forall q \in [1,2,...,t] \land h \in [0,1,...,q-1]$ lo que era $\mathcal{O}(n^2)$, y de esta forma solamente guardamos los valores para $q-1$ lo que es $\mathcal{O}(n)$.
+Lo que sucede es que tenemos varios subproblemas y en este caso siempre resolvemos todos, por lo que no parece tener una clara ventaja hacerlo top-down. Más aún, hacerlo bottom-up nos permitirá solo guardarnos los subproblemas relativos a tener hecho exactamente hasta el anterior trabajo (con $q-1$ y para todos los $h$, notar los menores no los utilizo en el calculo de $f(q,h)$), o sea, nos reduce la complejidad espacial. Esto es así pues incialmente debíamos guardar el valor de $f$ $\forall q \in [1,2,...,t] \land h \in [0,1,...,q-1]$ lo que sería $\mathcal{O}(n^2)$, y de esta forma solamente guardamos los valores para $q-1$ lo que es $\mathcal{O}(n)$.
 
  Veamos todo esto en un pseudocódigo.
 \subsubsection{El Pseudocódigo}
 
-Cabe aclarar que en el pseudcódigo (como también en la implementación) numeramos los trabajos desde 0 a excepción de $costos$ (que es una matriz) en el segundo indice, los trabajos están numerados desde 1 (ya que el 0 se reserva para el costo de poner sobre la máquina vacía).
+Cabe aclarar que en el pseudcódigo (como también en la implementación) numeramos los trabajos desde 0 a excepción del segundo índice de $costos$ (que es una matriz) donde los trabajos están numerados desde 1 (ya que el 0 se reserva para el costo de poner sobre la máquina vacía).
 
 \begin{algorithm}[H]
     \SetKwInOut{Input}{Input}
@@ -236,7 +236,7 @@ Cabe aclarar que en el pseudcódigo (como también en la implementación) numera
 
     \underline{Dinámica} $(trabajos,costo)$\;
     \Input{$trabajos \in \NN_{0}$; $costo \in \NN_{0}^{trabajos \times trabajos}$}
-    \Output{$costo \in \NN_{0}$, $lista$ vector enteros}
+    \Output{$costo \in \NN_{0}$, $lista$ vector de enteros}
     
     Inicializo en $0$ $actualCosto$ y $anteriorCosto$ vectores de enteros (de tamaño $trabajos$);
     
@@ -270,31 +270,33 @@ Cabe aclarar que en el pseudcódigo (como también en la implementación) numera
 	anteriorLista=actualLista;
     }
     
-     $ costo$ = mínimo de $actualCosto$ (se alcanza en $actualCosto[posición]$);
+     $ costo$ = mínimo de $actualCosto$ (se alcanza en $actualCosto[posicion]$);
      
-     $lista = actualLista[posición]$;
+     $lista = actualLista[posicion]$;
      
       return $costo$, $lista$;    
       
-      \caption{Devuelve el mínimo costo de entre todas las formas posibles de realizar todas las impresiones}   
+      \caption{Devuelve el mínimo costo de entre todas las formas posibles de realizar todos los trabajos y una lista de trabajos realizados por alguna máquina que logra dicho costo}   
 \end{algorithm}
 
-En el pseudocódigo básicamente lo que hacemos es aplicar la $f$ pero en orden, es importante esto ya que hay que tener cuidado en el orden en que resolvemos las dependencias (es porque estamos haciendo bottom-up). Es claro que cada fila, usa la fila anterior, o sea para calcular $f(q,h)$ para todo $h$ uso todos los valores de $f(q-1,h)$ para todo $h$. Por esto es que ambos \textbf{for} se anidan de dicha manera. Al principio del \textbf{for} actualizamos el costo según nos dice la $f$ y la lista de los trabajos que hay en alguna máquina se modifica solo si era el de la máquina que tenía a $q-1$ ya que es a la que le agrego el trabajo $q$. Además, como voy a recorrer todos los $h$, voy actualizando el $actualCosto[q]$ si tengo un menor $anteriorCosto[h]+costos[q][h]$; una vez que iteré en todos los $h$ calculé el mínimo que es $f(q,q-1)$. Ahí salimos del primer \textbf{for} y como hacía con $actualLista[h]$ actualizo si corresponde la $actualLista[q]$. Finalmente, antes de pasar a la siguiente iteración pongo en $anteriorCosto$ el $actualCosto$ y en $ anteriorLista$ la $actualLista$, ya que en la próxima iteración los actuales serán anteriores y sobre actual pisaré y guardaré nuevos resultados. Finalmente, se devuelve el mínimo buscado y su lista asociada (lo que nos pedían era $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ que en nuestro caso es el mínimo de $actualCosto$.
+En el pseudocódigo básicamente lo que hacemos es aplicar la $f$ pero en orden, es importante esto ya que hay que tener cuidado en el orden en que resolvemos las dependencias (es porque estamos haciendo bottom-up). Es claro que cada fila, usa la fila anterior, o sea para calcular $f(q,h)$ para todo $h$ uso todos los valores de $f(q-1,h)$ para todo $h$. Por esto es que ambos \textbf{for} se anidan de dicha manera. Al principio del \textbf{for} actualizamos el costo según nos dice la $f$ y también actualizamos la lista de los trabajos que hay en alguna máquina, que se modifica sólo si era el de la máquina que tenía a $q-1$ (ya que es a la que le agrego el trabajo $q$). Además, como voy a recorrer todos los $h$, voy actualizando el $actualCosto[q]$ si tengo un menor $anteriorCosto[h]+costos[q][h]$; una vez que iteré en todos los $h$ calculé el mínimo que es $f(q,q-1)$. Ahí salimos del primer \textbf{for} y (como hacía con $actualLista[h]$) actualizo si corresponde la $actualLista[q]$. Finalmente, antes de pasar a la siguiente iteración pongo en $anteriorCosto$ el $actualCosto$ y en $ anteriorLista$ la $actualLista$, ya que en la próxima iteración los actuales serán anteriores y sobre lo que ahora pasó a ser actual pisaré y guardaré nuevos resultados. Finalmente, se devuelve el mínimo buscado y su lista asociada (lo que nos pedían era $\displaystyle \min_{0 \leq h \leq t-1} {f(t,h)}  $ que en nuestro caso es el mínimo de $actualCosto$.
 
 
 
 \subsection{Complejidad}
 
-Cabe aclarar que para el análisis de complejidad tomaremos $n$ como la cantidad de trabajos. Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde $ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son $n^2$ en total y le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad será $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
+Cabe aclarar que para el análisis de complejidad tomaremos $n$ como la cantidad de trabajos. Como pudimos ver en la explicación de la función de dinámica, tenemos $n^2$ subproblemas y cada uno se resuelve en  $\mathcal{O}(1)$ salvo los subproblemas donde $ h=q-1$ que toman $\mathcal{O}(n)$. Luego tengo $\mathcal{O}(n^2)$ subproblemas (son menos de $n^2$ en total y siguen siendo menos si le saco los que no se resuelven en $\mathcal{O}(1)$ que son $n$)  resueltos en $\mathcal{O}(1)$ cada uno y $\mathcal{O}(n)$ subproblemas (hay uno por cada $q$, son $n$) resueltos en $\mathcal{O}(n)$ cada uno. Luego se deduce que la complejidad será $\mathcal{O}(n*n)+\mathcal{O}(n^2 *1)=\mathcal{O}(n^2)$
 
-Más aún esto se ratifica si miramos el pseudocódigo ya que realizamos todas operaciones que son $\mathcal{O}(n)$ u $\mathcal{O}(n)$ fuera del ciclo (inicialización o recorrido de vectores de tamaño a lo sumo $n$). Veamos qué sucede dentro del ciclo: tenemos dos ciclos anidados que se ejecuta cada uno a lo sumo $n$ veces, por ende todo se ejecuta a lo sumo $n^2$ veces y todo lo de adentro son operaciones $\mathcal{O}(1)$ (chequear si $q-1$ está en $anteriorLista[h]$ es $\mathcal{O}(1)$ porque inserto siempre ordenado y si es un elemento, es el último; lo mismo vale para checkear si $q-1$ está en $anteriorLista[elegido]$).Luego salimos del segundo \textbf{for} (el anidado) y cabe aclarar que copiar el vector $actualCosto$ y $actualLista$ no es $\mathcal{O}(1)$ sino $\mathcal{O}(n)$, pero está solo en uno de los ciclos, por lo que se repite $n$ veces y aporta una complejidad de $n* \mathcal{O}(n)= \mathcal{O}(n^2)$. Por ende, en el ciclo tenemos $n^2 *\mathcal{O}(1)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$ y sumado a lo que está fuera del ciclo nos da $\mathcal{O}(n)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$
+Más aún esto se ratifica si miramos el pseudocódigo ya que realizamos todas operaciones que son $\mathcal{O}(n)$ u $\mathcal{O}(n)$ fuera del ciclo (inicialización o recorrido de vectores de tamaño a lo sumo $n$). Veamos qué sucede dentro del ciclo: tenemos dos ciclos anidados que se ejecuta cada uno a lo sumo $n$ veces, por ende todo se ejecuta a lo sumo $n^2$ veces y todo lo de adentro son operaciones $\mathcal{O}(1)$ (chequear si $q-1$ está en $anteriorLista[h]$ es $\mathcal{O}(1)$ porque inserto siempre ordenado y si es un elemento, es el último; lo mismo vale para checkear si $q-1$ está en $anteriorLista[elegido]$).Luego salimos del segundo \textbf{for} (el anidado) y cabe aclarar que copiar el vector $actualCosto$ y $actualLista$ no es $\mathcal{O}(1)$ sino $\mathcal{O}(n)$, pero está solo en uno de los ciclos, por lo que se repite $n$ veces y aporta una complejidad de $n* \mathcal{O}(n)= \mathcal{O}(n^2)$ en total. Por ende, en el ciclo tenemos $n^2 *\mathcal{O}(1)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$ y sumado a lo que está fuera del ciclo nos da $\mathcal{O}(n)+ \mathcal{O}(n^2) = \mathcal{O}(n^2)$. Así, nuestro algoritmo logra la complejidad pedida.
 
 \subsection{Experimentación}
 
 
 \subsubsection{Contexto}
-La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel$^\textregistered$ Atom\texttrademark CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leía el siguiente). 
+
+La experimentacion se realizó toda en la misma computadora, cuyo procesador era Intel Atom$\texttrademark$ CPU N2600 @ 1.60GHz, de 36 bits physical, 48 bits virtual, con una memoria RAM de 2048 MB.  Para experimentar, se calculó el tiempo que tardaba el algoritmo sin considerar el tiempo de lectura y escritura ni el tiempo que llevaba armar la matriz (ya que se leía un dato, se escribía la matriz y luego se leía el siguiente). 
 El tiempo se medía no como tiempo global sino como tiempo de proceso, calculando la cantidad de ticks del reloj (con el tipo clock\_t de C++) y luego se dividía el delta de ticks sobre CLOCKS\_PER\_SEC. En todos los experimentos el tiempo se mide en segundos. 
+
 \subsubsection{Experimentos}
 
 \begin{wrapfigure}{R}{0.4\textwidth}
@@ -302,15 +304,15 @@ El tiempo se medía no como tiempo global sino como tiempo de proceso, calculand
 \includegraphics[width=0.4\textwidth]{r.png}
 \caption{ Gráfico de segundos de ejecución en función de cantidad de trabajos para instancias aleatorias.}
 \end{wrapfigure}
-Para empezar a experimentar, se corrió el programa con una serie de $2000$ casos generados aleatoriamente con una cantidad de trabajos aleatoria entre $1$ y $10^3$  con una distribución uniforme
+Para empezar a experimentar, se corrió el programa con una serie de $2000$ instancias generadas aleatoriamente con una cantidad de trabajos aleatoria entre $1$ y $10^3$  con una distribución uniforme
 \footnote{ se utilizó la función rand() de librerías de C++ en el rango correspondiente, para más detalle ver http://en.cppreference.com/w/cpp/numeric/random/rand }
-en dicho intervalo. Con un número entre $1$ y $10^6$ se rellenó cada elemnto de la matriz de costos. En la Figura 1 se graficaron estas instancias.
+en dicho intervalo. Con un número entre $1$ y $10^6$ elegido aleatoriamente con distribución uniforme (de la misma manera) se eligió cada costo  (cada elemento de la matriz de costos). En la Figura 1 se graficaron estas instancias.
 
 
 
-Como se puede ver en dicha Figura, pareciera haber un gráfico semejante a una parábola lo que ratificaría la relación cuadrática que propusimos entre la cantidad de trabajos y la cantidad de operaciones realizadas. Sin embargo, no otorga información del todo completa para aseverar eso, ya que podría tratarse de alguna función con crecimiento similar. Es por esto que se realizó un gráfico de la relación entre tiempo de ejecución y $trabajos^2$ y si la relación es efectivamente cuadrática, este gráfico debería ser constante.
+Como se puede ver en dicha Figura, pareciera haber un gráfico semejante a una parábola lo que ratificaría la relación cuadrática que propusimos entre la cantidad de trabajos y la cantidad de operaciones realizadas. Sin embargo, no otorga información del todo completa para aseverar eso, ya que podría tratarse de alguna función con crecimiento similar. Es por esto que se realizó un gráfico de la relación entre tiempo de ejecución y $trabajos^2$ y si la relación es efectivamente cuadrática (o menor), este gráfico debería ser constante .
 
-Como se puede ver en el gráfico de la Figura 2 efectivamente se trata de una constante, lo que verifica nuestra hipótesis y complejidad teórica de la relación cuadrática de dependencia entre la cantidad de operaciones y de trabajos. Podemos observar que no pareciera haber prácticamente dispersión, ni mejores ni peores casos, lo que analizaremos luego.
+Como se puede ver en el gráfico de la Figura 2 efectivamente se trata de una constante, lo que verifica nuestra hipótesis y complejidad teórica de la relación cuadrática de dependencia entre la cantidad de operaciones y de trabajos. Podemos observar también (en la Figura 1) que no pareciera haber prácticamente dispersión, ni mejores ni peores casos, lo que analizaremos luego.
 
 \break
 
